@@ -1,3 +1,21 @@
+hosted in cloud type
+https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
+
+
+```:version
+Django 3.1.13
+python 3.9
+```
+
+```
+cd python-django-work-system
+pip install -r requirements.txt
+python manage.py rynserver
+```
+
+users password: qwer1234qwer
+
+
 # django-boilerplate
 
 A faster way to getting started with your Django project. Have your django project up and running in no-time
@@ -18,5 +36,3 @@ This project is licensed under the MIT license, Copyright (c) 2020 django-boiler
 [LICENSE]: <https://github.com/beingbiplov/django-boilerplate/blob/master/LICENSE>
 
 
-hosted in cloud type
-https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
