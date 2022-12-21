@@ -16,3 +16,7 @@ You can start the server using: `python manage.py runserver` and navigate the de
 This project is licensed under the MIT license, Copyright (c) 2020 django-boilerplate. For more information see [LICENSE].
 
 [LICENSE]: <https://github.com/beingbiplov/django-boilerplate/blob/master/LICENSE>
+
+
+hosted in cloud type
+https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
