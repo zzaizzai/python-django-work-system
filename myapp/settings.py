@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'members',
     'works',
     'commissions',
+    'teams',
 ]
 
 MIDDLEWARE = [

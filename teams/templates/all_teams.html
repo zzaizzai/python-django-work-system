@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">username</th>
+            <th scope="col">Created</th>
+        </tr>
+    </thead>
+    {% if teams %}
+    {% for team in teams %}
+    <tbody>
+        <tr>
+            <td>{{team.id}}
+            </td>
+            <td><a href="{% url 'show_team' team.id %}">{{team.name}} </a></td>
+            <td>{{team.created_at}} </td>
+
+        </tr>
+    </tbody>
+    {% endfor %}
+    {% endif %}
+</table>
+
+
+
+
+
+{% endblock %}

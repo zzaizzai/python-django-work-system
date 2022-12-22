@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+
+<div class="card">
+    <div class="card-header d-flex">
+        <h5 class="mr-auto">{{team.name}} </h5>
+        <div>Status</div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"></h5>
+        <p class="card-text">{{team.description}}</p>
+        {% if members %}
+        members: <br>
+        {% for member in members %}
+
+        {{member.member}}
+        <br>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -17,10 +17,22 @@
                     Members
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">list Members</a>
+                    <a class="dropdown-item" href="{% url 'all_members' %}">list Members</a>
                 </div>
             </li>
-            
+
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Teams
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'all_teams' %}">list Teams</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Add Team</a>
+                </div>
+            </li>
+
 
             <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -28,7 +40,7 @@
                     Works
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">list Works</a>
+                    <a class="dropdown-item" href="{% url 'all_works' %}">list Works</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Add Work</a>
                 </div>
@@ -40,7 +52,7 @@
                     Commissions
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">list Commissions</a>
+                    <a class="dropdown-item" href="{% url 'all_commissions' %}">list Commissions</a>
                 </div>
             </li>
 

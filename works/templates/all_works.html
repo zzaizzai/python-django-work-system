@@ -26,7 +26,7 @@
     {% for work in works %}
     <tbody>
         <tr>
-            <td>{{work.title}} </td>
+            <td><a href="{%  url 'show_work' work.id %}">{{work.title}} </a></td>
             <td>{{work.date_due}} </td>
             <td>{{work.created_at}} </td>
             <td>{% if work.created_at != work.updated_at %}

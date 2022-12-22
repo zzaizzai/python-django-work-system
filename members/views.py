@@ -3,8 +3,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
+from django.contrib.auth.models import User
 
 # Create your views here.
+
+
+def all_members(request):
+    members = User.objects.all()
+    return render(request, 'all_members.html', {"members": members})
+
+
+def show_member(request, member_id):
+    member = User.objects.get(pk=member_id)
+    return render(request, 'show_member.html', {"member": member})
 
 
 def register_user(request):
@@ -21,7 +32,6 @@ def register_user(request):
     form = RegisterUserForm()
 
     return render(request, 'register_user.html', {"form": form})
-
 
 
 def login_user(request):

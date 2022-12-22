@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+
+
+{% if work %}
+
+
+<div class="card">
+    <div class="card-header d-flex">
+        <h5 class="mr-auto">{{work.title}} </h5>
+        <div>Status</div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Due: {{work.date_due}}</h5>
+        <p class="card-text">{{work.description}}</p>
+        <div>
+            Team:
+        </div>
+        <div>
+            Updated{% if work.created_at != work.updated_at %}
+            {{work.updated_at}}
+            {% else %}
+            <div>-</div>
+            {% endif %}
+        </div>
+
+        <div>
+            Created: {{work.created_at}}
+
+        </div>
+    </div>
+</div>
+
+
+{% endif %}
+
+
+
+
+
+{% endblock %}
