@@ -28,7 +28,7 @@
         <tr>
             <td>{{member.id}}
             </td>
-            <td><a href="#">{{member.username}} </a></td>
+            <td><a href="{% url 'show_member' member.id %}">{{member.username}} </a></td>
             <td>{{member.last_login}} </td>
             <td>{{member.date_joined}} </td>
 

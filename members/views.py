@@ -58,3 +58,7 @@ def logout_user(request):
     messages.success(request, ("logged out"))
 
     return redirect('home')
+
+
+def mypage(request):
+    return render(request, 'mypage.html', {})

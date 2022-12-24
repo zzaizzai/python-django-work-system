@@ -17,20 +17,22 @@
     <thead>
         <tr>
             <th scope="col">id</th>
-            <th scope="col">username</th>
-            <th scope="col">last login</th>
-            <th scope="col">Joined</th>
+            <th scope="col">title</th>
+            <th scope="col">team in charge</th>
+            <th scope="col">created_at</th>
+            <th scope="col">created_by</th>
         </tr>
     </thead>
-    {% if members %}
-    {% for member in members %}
+    {% if commissions %}
+    {% for commission in commissions %}
     <tbody>
         <tr>
-            <td>{{member.id}}
+            <td>{{commission.id}}
             </td>
-            <td><a href="#">{{member.username}} </a></td>
-            <td>{{member.last_login}} </td>
-            <td>{{member.date_joined}} </td>
+            <td><a href="{% url 'show_commission'  commission.id %}">{{commission.title}} </a></td>
+            <td><a href="{% url 'show_team' commission.team.id %}">{{commission.team.name}} </a></td>
+            <td>{{commission.created_at}} </td>
+            <td>{{commission.created_by.username}} </td>
 
         </tr>
     </tbody>

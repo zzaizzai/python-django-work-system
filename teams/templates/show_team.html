@@ -23,11 +23,12 @@
         <p class="card-text">{{team.description}}</p>
         {% if members %}
         members: <br>
-        {% for member in members %}
+        <div class="d-flex">
+            {% for memberInfo in members %}
 
-        {{member.member}}
-        <br>
-        {% endfor %}
+            <div class="mr-3"><a href="{% url 'show_member'  memberInfo.member.id %}">{{memberInfo.member}}</a></div>
+            {% endfor %}
+        </div>
         {% endif %}
     </div>
 </div>

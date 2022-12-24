@@ -16,6 +16,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th scope="col">id</th>
             <th scope="col">Title</th>
             <th scope="col">Due</th>
             <th scope="col">Created</th>
@@ -26,6 +27,7 @@
     {% for work in works %}
     <tbody>
         <tr>
+            <td>{{work.id}}</td>
             <td><a href="{%  url 'show_work' work.id %}">{{work.title}} </a></td>
             <td>{{work.date_due}} </td>
             <td>{{work.created_at}} </td>

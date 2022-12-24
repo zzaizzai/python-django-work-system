@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+{% if submitted %}
+Your Venue was submitted succefully
+{% else %}
+
+
+<h4>Add Work</h4>
+<br>
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {{form.as_p}}
+    <input type="submit" value="Submit" class="btn btn-primary">
+
+
+</form>
+
+{% endif %}
+
+
+
+{% endblock %}

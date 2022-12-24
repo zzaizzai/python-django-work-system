@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+<div class="card">
+    <div class="card-header d-flex">
+        <h5 class="mr-auto">{{commission.id}}. {{commission.title}} </h5>
+        <div>Status</div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Parent: <a
+                href="{% url 'show_work' commission.parent_work.id %}">{{commission.parent_work.title}}</a></h5>
+        <p class="card-text">created by: {{commission.created_by.username}} {{commission.parent_work.team}}</p>
+        <p class="card-text">{{commission.description}}</p>
+    </div>
+    <div class="card-footer text-muted d-flex">
+        <div class="mr-auto">
+            Created: {{commission.created_at}}
+            {% if commission.created_at != commission.updated_at %}
+            ( Updated: {{commission.updated_at}} )
+            {% else %}
+            {% endif %}
+        </div>
+        <button class="btn disabled btn-sm btn-outline-secondary mx-2">Modify</button>
+        <button class="btn disabled btn-sm btn-outline-danger mx-2">Cancle</button>
+        <button class="btn disabled btn-sm btn-outline-success mx-2">Done</button>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

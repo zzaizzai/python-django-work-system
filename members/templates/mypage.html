@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+
+<h4>Mypage</h4>
+
+<br>
+
+{% if user.is_authenticated %}
+
+
+
+<div class="card">
+    <div class="card-header d-flex">
+        <h5 class="mr-auto">{{user.username}}</h5>
+        <div>Status</div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Due: {{work.date_due}}</h5>
+        <p class="card-text">{{user.username}}</p>
+        <div>
+            Team:
+        </div>
+
+    </div>
+</div>
+
+
+{% else %}
+<div>please login</div>
+
+{% endif %}
+
+
+
+
+{% endblock %}

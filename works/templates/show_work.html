@@ -29,17 +29,25 @@
             Team:
         </div>
         <div>
-            Updated{% if work.created_at != work.updated_at %}
-            {{work.updated_at}}
-            {% else %}
-            <div>-</div>
-            {% endif %}
+
         </div>
 
         <div>
-            Created: {{work.created_at}}
+
 
         </div>
+
+    </div>
+    <div class="card-footer text-muted d-flex">
+        <div class="mr-auto">
+            Created: {{work.created_at}}
+            {% if work.created_at != work.updated_at %}
+            ({{work.updated_at}})
+            {% else %}
+            {% endif %}
+        </div>
+        <button class="btn btn-sm btn-outline-secondary mx-2">Modify</button>
+        <button class="btn btn-sm btn-outline-primary">Add Commission</button>
     </div>
 </div>
 
