@@ -10,7 +10,7 @@ python 3.9
 ```
 cd python-django-work-system
 pip install -r requirements.txt
-python manage.py rynserver
+python manage.py runserver
 ```
 
 users password: qwer1234qwer
