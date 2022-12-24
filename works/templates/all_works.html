@@ -45,6 +45,45 @@
 
 
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+
+        {% if works.has_previous %}
+
+        <li class="page-item"><a href="?page=1" class="page-link">&laquo First</a></li>
+        <li class="page-item"><a href="?page={{venues.previous_page_number}}" class="page-link">previous</a></li>
+
+        {% else %}
+
+        <li class="page-item disabled"><a class="page-link">&laquo First</a></li>
+        <li class="page-item disabled"><a class="page-link">previous</a></li>
+
+        {% endif %}
+
+
+        {% for i in nums %}
+
+        <li class="page-item"><a class="page-link " href="?page={{forloop.counter}}">{{forloop.counter}}
+            </a></li>
+
+        {% endfor %}
+
+        {% if works.has_next %}
+        <li class="page-item"><a href="?page={{works.next_page_number}}" class="page-link">next</a></li>
+        <li class="page-item"><a href="?page={{works.paginator.num_pages}}" class="page-link">Last &raquo </a></li>
+
+
+        {% else %}
+
+        <li class="page-item disabled"><a class="page-link">next</a></li>
+        <li class="page-item disabled"><a class="page-link">Last &raquo </a></li>
+
+        {% endif %}
+
+    </ul>
+</nav>
+
+
 
 
 {% endblock %}

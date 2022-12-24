@@ -13,7 +13,6 @@
 <br>
 
 
-
 {% if work %}
 
 
@@ -26,10 +25,10 @@
         <h5 class="card-title">Due: {{work.date_due}}</h5>
         <p class="card-text">{{work.description}}</p>
         <div>
-            Team:
+            Team: <a href="{% url 'show_team' work.team.id  %}">{{work.team}}</a>
         </div>
         <div>
-
+            Created by: <a href="{% url 'show_member' work.created_by.id %}">{{work.created_by}}</a>
         </div>
 
         <div>

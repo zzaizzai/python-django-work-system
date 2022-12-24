@@ -8,7 +8,7 @@ from teams.models import Team
 class Work(models.Model):
     title = models.CharField('Work title', max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.IntegerField(blank=True, null=True)
+    created_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     updated_at = models.DateTimeField(auto_now=True)
     date_due = models.DateField('Work due')
     team = models.ForeignKey(

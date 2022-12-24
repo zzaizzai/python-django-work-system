@@ -1,11 +1,11 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Work
+from .models import Commission
 
 
-class WorkForm(ModelForm):
+class CommissionForm(ModelForm):
     class Meta:
-        model = Work
+        model = Commission
 
         fields = ('title', 'team', 'date_due', 'description')
 
