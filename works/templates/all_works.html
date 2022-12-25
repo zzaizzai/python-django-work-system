@@ -15,9 +15,9 @@
 
 <div class="d-flex mb-3">
     <div class="mr-auto"></div>
-    <form class="form-inline " method="POST" action="{% url 'all_works' %}">{% csrf_token %}
-        <input class="form-control mr-sm-2" value="{{searched}}" name="searched" type="search"
-            placeholder="Search with Title" aria-label="Search">
+    <form class="form-inline " method="GET" action="{% url 'all_works' %}?searched=">
+        <input style="width: 300px;" class="form-control mr-sm-2" value="{{searched}}" name="searched" type="search"
+            placeholder="title or team or user" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </div>
@@ -30,6 +30,7 @@
                 <th scope="col ">#</th>
                 <th scope="col" style="width:45%">Title</th>
                 <th scope="col">Created_by</th>
+                <th scope="col">Team</th>
                 <th scope="col">Due</th>
                 <th scope="col">Created</th>
                 <th scope="col">Updated</th>
@@ -42,10 +43,11 @@
                 <td>{{work.id}}</td>
                 <td><a href="{%  url 'show_work' work.id %}">{{work.title}} </a></td>
                 <td><a href="{%  url 'show_member' work.created_by.id %}">{{work.created_by}} </a></td>
-                <td>{{work.date_due|date:"y-n-j"}} </td>
-                <td>{{work.created_at|date:"y-n-j H:i"}} </td>
+                <td><a href="{% url 'show_team' work.team.id %}">{{work.team.name}} </a></td>
+                <td>{{work.date_due|date:"y-m-j"}} </td>
+                <td>{{work.created_at|date:"y-m-j H:i"}} </td>
                 <td>{% if work.created_at != work.updated_at %}
-                    {{work.updated_at|date:"y-n-j H:i"}}
+                    {{work.updated_at|date:"y-m-j H:i"}}
                     {% else %}
                     <div>-</div>
                     {% endif %}

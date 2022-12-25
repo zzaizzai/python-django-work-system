@@ -24,7 +24,7 @@
 
 <div class="card mb-5">
     <div class="card-header d-flex">
-        <h5>({{commission.parent_work.id}}.) <a  class="card-title"
+        <h5>({{commission.parent_work.id}}.) <a  class="card-title" style="color: black;"
                 href="{% url 'show_work' commission.parent_work.id %}"> {{commission.parent_work.title}}</a></h5>
 
     </div>
@@ -54,9 +54,9 @@
 
     <div class="card-footer text-muted d-flex">
         <div class="mr-auto">
-            Created: {{commission.created_at|date:"y-n-j H:i"}}
+            Created: {{commission.created_at|date:"y-m-j H:i"}}
             {% if commission.created_at != commission.updated_at %}
-            ( Updated: {{commission.updated_at|date:"y-n-j H:i"}} )
+            ( Updated: {{commission.updated_at|date:"y-m-j H:i"}} )
             {% else %}
             {% endif %}
         </div>

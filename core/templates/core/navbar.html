@@ -69,7 +69,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'mypage' %}">{{user.username}}'s Page</a>
+                <a class="nav-link" href="{% url 'show_member' user.id %}">{{user.username}}'s Page</a>
             </li>
 
             {% else %}

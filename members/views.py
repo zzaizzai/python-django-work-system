@@ -16,7 +16,10 @@ def all_members(request):
 
 def show_member(request, member_id):
     member = User.objects.get(pk=member_id)
-    return render(request, 'show_member.html', {"member": member})
+    teams = Team.objects.filter(member_team__member_id=member.id)
+    return render(request, 'show_member.html',
+                  {"member": member,
+                   "teams": teams})
 
 
 def register_user(request):
@@ -48,7 +51,7 @@ def login_user(request):
 
         else:
             messages.success(request, ("bad login method"))
-            return redirect('/members/login')
+            return redirect('/members/login_user')
 
     else:
         return render(request, 'login.html', {})

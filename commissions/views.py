@@ -9,30 +9,42 @@ import datetime
 from .forms import CommissionForm
 from .models import Commission
 from django.http.response import JsonResponse
+from django.core.paginator import Paginator
 from django.utils import timezone
 
 
 def all_commissions(request):
 
+    page_limit: int = 5
 
-    commissions = Commission.objects.all().order_by('-created_at')
+    # commissions = Commission.objects.all().order_by('-created_at')
+
+    p = Paginator(Commission.objects.all().order_by('-created_at'), page_limit)
+
+    page = request.GET.get('page')
+    commissions = p.get_page(page)
+
     today = datetime.date.today()
+
+    nums = "a" * commissions.paginator.num_pages
 
     for commission in commissions:
         if commission.date_due < today and not commission.datetime_completed:
             commission.status_due = "over"
 
-    return render(request, 'all_commissions.html', {"commissions": commissions})
+    return render(request, 'all_commissions.html',
+                  {
+                      "nums": nums,
+                      "commissions": commissions})
 
 
 def show_commission(request, commission_id):
     commission = Commission.objects.get(pk=commission_id)
 
-
-
     if request.method == "POST":
         if request.POST.get('complete', None):
-            commission.datetime_completed = datetime.datetime.now(datetime.timezone.utc)
+            commission.datetime_completed = datetime.datetime.now(
+                datetime.timezone.utc)
             commission.user_completed = request.user.id
             commission.save()
 
@@ -41,11 +53,13 @@ def show_commission(request, commission_id):
     else:
         completed_by = None
 
-    return render(request, 'show_commission.html', {"commission": commission, "completed_by":completed_by})
+    return render(request, 'show_commission.html', {"commission": commission, "completed_by": completed_by})
+
 
 def complete_commission(request):
-    # return 
+    # return
     return JsonResponse("ddd")
+
 
 def add_commission(request, work_id):
 

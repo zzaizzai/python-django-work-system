@@ -2,9 +2,6 @@
 
 {% block content %}
 
-
-
-
 {% if form.erros %}
 <p>something worng with your form</p>
 {% endif %}
@@ -19,6 +16,7 @@
             <th scope="col">id</th>
             <th scope="col">username</th>
             <th scope="col">Created</th>
+            <th scope="col">members</th>
         </tr>
     </thead>
     {% if teams %}
@@ -29,6 +27,7 @@
             </td>
             <td><a href="{% url 'show_team' team.id %}">{{team.name}} </a></td>
             <td>{{team.created_at}} </td>
+            <td>--</td>
 
         </tr>
     </tbody>

@@ -16,7 +16,7 @@
 <div class="card">
     <div class="card-header d-flex">
         <h5 class="mr-auto">{{member.id}}. {{member.username}}</h5>
-        <div>Status</div>
+        <div>Role</div>
     </div>
     <div class="card-body">
         <div class="card-title">
@@ -26,10 +26,20 @@
         <p class="card-text">first_name: {{member.first_name}}</p>
         <p class="card-text">last_name: {{member.last_name}}</p>
         <p class="card-text">email: {{member.email}}</p>
+        <div>Team:</div>
+        {% if teams %}
+        {% for team in teams %}
+        <a href="{% url 'show_team' team.id %}">{{team}}</a>
+        {% endfor %}
+        {% endif %}
 
         {% if member %}
 
         {% endif %}
+    </div>
+    <div class="card-footer text-muted d-flex">
+        <a href="{% url 'all_works' %}?searched={{member.username}}" class="btn btn-sm btn-outline-primary mr-2">Show
+            Works</a>
     </div>
 </div>
 

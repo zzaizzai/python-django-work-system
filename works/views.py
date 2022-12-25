@@ -4,18 +4,22 @@ from .forms import WorkForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from commissions.models import Commission
+from django.db.models import Q
 # Create your views here.
 
 
 def all_works(request):
+    searched = request.GET.get('searched', None)
 
     page_limit: int = 5
+    if searched:
 
-    if request.method == "POST":
-
-        searched = request.POST["searched"]
+        # search title or team name or username
         p = Paginator(Work.objects.all().filter(
-            title__contains=searched).order_by('-created_at'), page_limit)
+            Q(title__contains=searched) |
+            Q(team__name__contains=searched) |
+            Q(created_by__username__contains=searched)
+        ).order_by('-created_at'), page_limit)
 
     else:
         searched = ""

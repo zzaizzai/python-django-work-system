@@ -58,26 +58,33 @@
 </div>
 
 
-<div>
-    {% for commission in child_commissions %}
-    {% if commission.datetime_completed %}
-    <div class="card" style="background-color: gainsboro;">
-        {% else %}
-        <div class="card">
-            {% endif %}
 
-            <div class="card-header d-flex">
-                <h5 class="mr-auto">({{commission.id}}.) <a style="color: black;"
-                        href="{% url 'show_commission' commission.id %}">{{commission.title}}</a> </h5>
-                <div class="font-weight-bold">{% if commission.datetime_completed %}
-                    <span class="text-primary">Completed</span> {% else %}
-                    <span class="text-danger">Waitting</span>
-                    {% endif %}
-                </div>
+{% for commission in child_commissions %}
+
+{% if commission.datetime_completed %}
+<div class="card" style="background-color: gainsboro;">
+    {% else %}
+    <div class="card">
+        {% endif %}
+
+        <div class="card-header d-flex">
+            <h5 class="mr-auto">({{commission.id}}.) <a style="color: black;"
+                    href="{% url 'show_commission' commission.id %}">{{commission.title}}</a> </h5>
+            <div class="font-weight-bold">{% if commission.datetime_completed %}
+                <span class="text-primary">Completed</span> {% else %}
+                <span class="text-danger">Waitting</span>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% empty %}
+    <div class="card">
+        <div class="card-header d-flex">
+            <h5>No commission</h5>
+        </div>
+    </div>
+    {% endfor %}
+
     {% endif %}
 
 
