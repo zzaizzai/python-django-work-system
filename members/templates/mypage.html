@@ -23,18 +23,27 @@
 
 <div class="card">
     <div class="card-header d-flex">
-        <h5 class="mr-auto">{{user.username}}</h5>
+        <h5 class="mr-auto">{{user.id}}. {{user.username}}</h5>
         <div>Status</div>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Due: {{work.date_due}}</h5>
-        <p class="card-text">{{user.username}}</p>
-        <div>
-            Team:
-        </div>
+        <h5 class="card-title"> My Teams:{% if teams_my %}
+            {% for team in teams_my %}
+            <a href="{% url 'show_team' team.id %}">{{team.name}}</a>
+            {% endfor %}
+            {% endif %}
+        </h5>
+        <p class="card-text">First Name: {{user.first_name}}</p>
+        <p class="card-text">Last Name : {{user.last_name}}</p>
+    </div>
 
+    <div class="card-footer text-muted d-flex">
+        <div class="mr-auto">
+            Joined: {{user.date_joined}}
+        </div>
     </div>
 </div>
+
 
 
 {% else %}

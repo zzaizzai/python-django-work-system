@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
 from django.contrib.auth.models import User
+from teams.models import Team
 
 # Create your views here.
 
@@ -61,4 +62,6 @@ def logout_user(request):
 
 
 def mypage(request):
-    return render(request, 'mypage.html', {})
+    user = request.user
+    teams_my = Team.objects.filter(member_team__member_id=user.id)
+    return render(request, 'mypage.html', {"teams_my": teams_my})

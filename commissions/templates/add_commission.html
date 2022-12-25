@@ -2,9 +2,6 @@
 
 {% block content %}
 
-
-
-
 {% if form.erros %}
 <p>something worng with your form</p>
 {% endif %}
@@ -14,13 +11,27 @@
 
 {% if user.is_authenticated %}
 
+
+<h4>Parent Work</h4>
+<div class="card mb-5">
+    <div class="card-header d-flex">
+        <h5 class="card-title">({{parent_work.id}}.) <a href="">{{parent_work.title}}</a></h5>
+
+    </div>
+    <!-- Vertical line -->
+    <div style="text-align: center;">
+        <div class="vertical"></div>
+    </div>
+</div>
+
 <h4>Add Commission</h4>
-<br>
+
 <form action="" method="POST">
     {% csrf_token %}
 
     {{form.as_p}}
     <input type="submit" value="Submit" class="btn btn-primary">
+
 
 
 </form>
@@ -30,7 +41,8 @@
 </div>
 {% endif %}
 
-
+<br>
+<br>
 
 
 

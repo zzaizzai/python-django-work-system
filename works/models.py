@@ -14,7 +14,7 @@ class Work(models.Model):
     team = models.ForeignKey(
         Team, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.CharField(
-        'Work description', max_length=255, null=True)
+        'Work description', max_length=10000, null=True)
     datetime_completed = models.DateTimeField(
         'completed datetime', blank=True, null=True)
     user_completed = models.IntegerField(

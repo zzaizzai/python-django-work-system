@@ -3,14 +3,24 @@ from .models import Work
 from .forms import WorkForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
+from commissions.models import Commission
 # Create your views here.
 
 
 def all_works(request):
+
     page_limit: int = 5
 
+    if request.method == "POST":
 
-    p = Paginator(Work.objects.all().order_by('-created_at'), page_limit)
+        searched = request.POST["searched"]
+        p = Paginator(Work.objects.all().filter(
+            title__contains=searched).order_by('-created_at'), page_limit)
+
+    else:
+        searched = ""
+        p = Paginator(Work.objects.all().order_by('-created_at'), page_limit)
+
     page = request.GET.get('page')
     works = p.get_page(page)
 
@@ -19,13 +29,16 @@ def all_works(request):
     return render(request, 'all_works.html',
                   {
                       "works": works,
-                      "nums": nums
+                      "nums": nums,
+                      "searched": searched
                   })
 
 
 def show_work(request, work_id):
     work = Work.objects.get(pk=work_id)
-    return render(request, 'show_work.html', {"work": work})
+    child_commissions = Commission.objects.filter(
+        parent_work__id=work.id).order_by('-created_at')
+    return render(request, 'show_work.html', {"work": work, "child_commissions": child_commissions})
 
 
 def add_work(request):

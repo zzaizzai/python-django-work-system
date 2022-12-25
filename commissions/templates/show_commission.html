@@ -12,32 +12,69 @@
 <br>
 <br>
 
+<style>
+    .vertical {
+        border-left: 8px solid gray;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+    }
+</style>
+
+
+<div class="card mb-5">
+    <div class="card-header d-flex">
+        <h5>({{commission.parent_work.id}}.) <a  class="card-title"
+                href="{% url 'show_work' commission.parent_work.id %}"> {{commission.parent_work.title}}</a></h5>
+
+    </div>
+    <!-- Vertical line -->
+    <div style="text-align: center;">
+        <div class="vertical"></div>
+    </div>
+</div>
+
+
+
 <div class="card">
     <div class="card-header d-flex">
-        <h5 class="mr-auto">{{commission.id}}. {{commission.title}} </h5>
-        <div>Status</div>
+        <h5 class="mr-auto">({{commission.id}}.) {{commission.title}} </h5>
+        <div>{% if commission.datetime_completed %}Completed{% else %}Waitting{% endif %}</div>
+
     </div>
     <div class="card-body">
-        <h5 class="card-title">Parent: <a
-                href="{% url 'show_work' commission.parent_work.id %}">{{commission.parent_work.title}}</a></h5>
         <p class="card-text">created by: {{commission.created_by.username}} {{commission.parent_work.team}}</p>
         <p class="card-text">{{commission.description}}</p>
+
+        {% if commission.datetime_completed %}
+        <h5 class="card-text">Completed: {{commission.datetime_completed}} by <a
+                href="{% url 'show_member' completed_by.id %}">{{completed_by}}</a></h5>
+        {% endif %}
     </div>
+
     <div class="card-footer text-muted d-flex">
         <div class="mr-auto">
-            Created: {{commission.created_at}}
+            Created: {{commission.created_at|date:"y-n-j H:i"}}
             {% if commission.created_at != commission.updated_at %}
-            ( Updated: {{commission.updated_at}} )
+            ( Updated: {{commission.updated_at|date:"y-n-j H:i"}} )
             {% else %}
             {% endif %}
         </div>
         <button class="btn disabled btn-sm btn-outline-secondary mx-2">Modify</button>
         <button class="btn disabled btn-sm btn-outline-danger mx-2">Cancle</button>
-        <button class="btn disabled btn-sm btn-outline-success mx-2">Done</button>
+        {% if commission.datetime_completed %}
+        <button name="complete" value="complete" id="complete_commission"
+            class="btn disabled btn-sm btn-outline-success mx-2">Done</button>
+        {% else %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <button method="submit" name="complete" value="complete" id="complete_commission"
+                class="btn btn-sm btn-success mx-2">Done</button>
+        </form>
+        {% endif %}
+
     </div>
 </div>
-
-
 
 
 {% endblock %}

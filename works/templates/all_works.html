@@ -13,35 +13,50 @@
 <br>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">Title</th>
-            <th scope="col">Due</th>
-            <th scope="col">Created</th>
-            <th scope="col">Updated</th>
-        </tr>
-    </thead>
-    {% if works %}
-    {% for work in works %}
-    <tbody>
-        <tr>
-            <td>{{work.id}}</td>
-            <td><a href="{%  url 'show_work' work.id %}">{{work.title}} </a></td>
-            <td>{{work.date_due}} </td>
-            <td>{{work.created_at}} </td>
-            <td>{% if work.created_at != work.updated_at %}
-                {{work.updated_at}}
-                {% else %}
-                <div>-</div>
-                {% endif %}
-            </td>
-        </tr>
-    </tbody>
-    {% endfor %}
-    {% endif %}
-</table>
+<div class="d-flex mb-3">
+    <div class="mr-auto"></div>
+    <form class="form-inline " method="POST" action="{% url 'all_works' %}">{% csrf_token %}
+        <input class="form-control mr-sm-2" value="{{searched}}" name="searched" type="search"
+            placeholder="Search with Title" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+
+
+<div class="">
+    <table class="table ">
+        <thead>
+            <tr>
+                <th scope="col ">#</th>
+                <th scope="col" style="width:45%">Title</th>
+                <th scope="col">Created_by</th>
+                <th scope="col">Due</th>
+                <th scope="col">Created</th>
+                <th scope="col">Updated</th>
+            </tr>
+        </thead>
+        {% if works %}
+        {% for work in works %}
+        <tbody>
+            <tr>
+                <td>{{work.id}}</td>
+                <td><a href="{%  url 'show_work' work.id %}">{{work.title}} </a></td>
+                <td><a href="{%  url 'show_member' work.created_by.id %}">{{work.created_by}} </a></td>
+                <td>{{work.date_due|date:"y-n-j"}} </td>
+                <td>{{work.created_at|date:"y-n-j H:i"}} </td>
+                <td>{% if work.created_at != work.updated_at %}
+                    {{work.updated_at|date:"y-n-j H:i"}}
+                    {% else %}
+                    <div>-</div>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        {% endif %}
+    </table>
+</div>
+
 
 
 

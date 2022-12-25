@@ -2,7 +2,14 @@
 
 {% block content %}
 
-
+<style>
+    .vertical {
+        border-left: 8px solid gray;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+    }
+</style>
 
 
 {% if form.erros %}
@@ -16,7 +23,7 @@
 {% if work %}
 
 
-<div class="card">
+<div class="card mb-5">
     <div class="card-header d-flex">
         <h5 class="mr-auto">{{work.title}} </h5>
         <div>Status</div>
@@ -31,30 +38,47 @@
             Created by: <a href="{% url 'show_member' work.created_by.id %}">{{work.created_by}}</a>
         </div>
 
-        <div>
-
-
-        </div>
-
     </div>
     <div class="card-footer text-muted d-flex">
         <div class="mr-auto">
-            Created: {{work.created_at}}
+            Created: {{work.created_at|date:"y-n-j H:i"}}
             {% if work.created_at != work.updated_at %}
-            ({{work.updated_at}})
+            ({{work.updated_at|date:"y-n-j H:i"}})
             {% else %}
             {% endif %}
         </div>
         <button class="btn btn-sm btn-outline-secondary mx-2">Modify</button>
-        <button class="btn btn-sm btn-outline-primary">Add Commission</button>
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'add_commission' work.id  %}">Add Commission</a>
+    </div>
+
+    <!-- Vertical line -->
+    <div style="text-align: center;">
+        <div class="vertical"></div>
     </div>
 </div>
 
 
-{% endif %}
+<div>
+    {% for commission in child_commissions %}
+    {% if commission.datetime_completed %}
+    <div class="card" style="background-color: gainsboro;">
+        {% else %}
+        <div class="card">
+            {% endif %}
+
+            <div class="card-header d-flex">
+                <h5 class="mr-auto">({{commission.id}}.) <a style="color: black;"
+                        href="{% url 'show_commission' commission.id %}">{{commission.title}}</a> </h5>
+                <div class="font-weight-bold">{% if commission.datetime_completed %}
+                    <span class="text-primary">Completed</span> {% else %}
+                    <span class="text-danger">Waitting</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
 
-
-
-
-{% endblock %}
+    {% endblock %}

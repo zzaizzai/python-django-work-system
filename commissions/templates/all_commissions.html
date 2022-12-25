@@ -19,8 +19,10 @@
             <th scope="col">id</th>
             <th scope="col">title</th>
             <th scope="col">team in charge</th>
+            <th scope="col">Due</th>
             <th scope="col">created_at</th>
             <th scope="col">created_by</th>
+            <th scope="col">Completed</th>
         </tr>
     </thead>
     {% if commissions %}
@@ -31,8 +33,18 @@
             </td>
             <td><a href="{% url 'show_commission'  commission.id %}">{{commission.title}} </a></td>
             <td><a href="{% url 'show_team' commission.team.id %}">{{commission.team.name}} </a></td>
-            <td>{{commission.created_at}} </td>
+            <td>
+                <div class="d-flex">{{commission.date_due|date:"y-n-j"}} {% if commission.status_due %} <div
+                        class="text-danger font-weight-bold">&nbsp;&#33;&#33;
+                    </div> {% endif %}</div>
+            </td>
+            <td>{{commission.created_at|date:"y-n-j H:i"}} </td>
             <td>{{commission.created_by.username}} </td>
+            <td> {% if commission.datetime_completed %}
+                {{commission.datetime_completed|date:"y-n-j H:i"}}
+                {% else %}
+                -
+                {% endif %}</td>
 
         </tr>
     </tbody>
@@ -41,7 +53,7 @@
 </table>
 
 
-
+<h1>{% now "Y-m-d G:i:s" %}</h1>
 
 
 {% endblock %}
