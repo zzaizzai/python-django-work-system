@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from works.models import Work
 import datetime
 from .forms import CommissionForm
-from .models import Commission
+from .models import Commission, CommissionComment
 from django.http.response import JsonResponse
 from django.core.paginator import Paginator
 from django.utils import timezone
@@ -41,6 +41,9 @@ def all_commissions(request):
 def show_commission(request, commission_id):
     commission = Commission.objects.get(pk=commission_id)
 
+    comments = CommissionComment.objects.filter(
+        parent_commission__id=commission_id).order_by('created_at')
+
     if request.method == "POST":
         if request.POST.get('complete', None):
             commission.datetime_completed = datetime.datetime.now(
@@ -53,7 +56,12 @@ def show_commission(request, commission_id):
     else:
         completed_by = None
 
-    return render(request, 'show_commission.html', {"commission": commission, "completed_by": completed_by})
+    return render(request, 'show_commission.html',
+                  {
+                      "commission": commission,
+                      "completed_by": completed_by,
+                      "comments": comments
+                  })
 
 
 def complete_commission(request):

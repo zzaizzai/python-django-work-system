@@ -8,7 +8,8 @@ from teams.models import Team
 class Work(models.Model):
     title = models.CharField('Work title', max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL)
     updated_at = models.DateTimeField(auto_now=True)
     date_due = models.DateField('Work due')
     team = models.ForeignKey(
@@ -22,3 +23,12 @@ class Work(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class WorkComment(models.Model):
+    parent_work = models.ForeignKey(Work, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL)
+    description = models.CharField(
+        'Work description', max_length=500, null=True)

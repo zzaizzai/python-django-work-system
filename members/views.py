@@ -10,7 +10,7 @@ from teams.models import Team
 
 
 def all_members(request):
-    members = User.objects.all()
+    members = User.objects.all().order_by('-id')
     return render(request, 'all_members.html', {"members": members})
 
 

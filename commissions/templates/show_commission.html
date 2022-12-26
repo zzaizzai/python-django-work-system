@@ -24,7 +24,7 @@
 
 <div class="card mb-5">
     <div class="card-header d-flex">
-        <h5>({{commission.parent_work.id}}.) <a  class="card-title" style="color: black;"
+        <h5>({{commission.parent_work.id}}.) <a class="card-title" style="color: black;"
                 href="{% url 'show_work' commission.parent_work.id %}"> {{commission.parent_work.title}}</a></h5>
 
     </div>
@@ -47,7 +47,7 @@
         <p class="card-text">{{commission.description}}</p>
 
         {% if commission.datetime_completed %}
-        <h5 class="card-text">Completed: {{commission.datetime_completed}} by <a
+        <h5 class="card-text">Completed: {{commission.datetime_completed|date:"y-n-j H:i"}} by <a
                 href="{% url 'show_member' completed_by.id %}">{{completed_by}}</a></h5>
         {% endif %}
     </div>
@@ -75,6 +75,19 @@
 
     </div>
 </div>
-
+<br>
+<br>
+<div class="card mt-5">
+    <div class="card-header d-flex">{{counts.comments}} Comments</div>
+    <div class="card-body">
+        {% for comment in comments %}
+        <div class="mb-2 d-flex">
+            <div class="font-weight-bold mr-1">{{comment.created_by.username}} : </div>
+            <div>{{comment.description}}</div>
+            <div class="ml-2 text-muted">{{comment.created_at|date:"y-n-j H:i"}}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

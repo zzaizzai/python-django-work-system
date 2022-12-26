@@ -33,7 +33,7 @@
                 <th scope="col">Team</th>
                 <th scope="col">Due</th>
                 <th scope="col">Created</th>
-                <th scope="col">Updated</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         {% if works %}
@@ -46,11 +46,7 @@
                 <td><a href="{% url 'show_team' work.team.id %}">{{work.team.name}} </a></td>
                 <td>{{work.date_due|date:"y-m-j"}} </td>
                 <td>{{work.created_at|date:"y-m-j H:i"}} </td>
-                <td>{% if work.created_at != work.updated_at %}
-                    {{work.updated_at|date:"y-m-j H:i"}}
-                    {% else %}
-                    <div>-</div>
-                    {% endif %}
+                <td>-
                 </td>
             </tr>
         </tbody>
@@ -67,8 +63,9 @@
 
         {% if works.has_previous %}
 
-        <li class="page-item"><a href="?page=1" class="page-link">&laquo First</a></li>
-        <li class="page-item"><a href="?page={{venues.previous_page_number}}" class="page-link">previous</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page=1" class="page-link">&laquo First</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page={{venues.previous_page_number}}"
+                class="page-link">previous</a></li>
 
         {% else %}
 
@@ -80,14 +77,17 @@
 
         {% for i in nums %}
 
-        <li class="page-item"><a class="page-link " href="?page={{forloop.counter}}">{{forloop.counter}}
+        <li class="page-item"><a class="page-link "
+                href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
             </a></li>
 
         {% endfor %}
 
         {% if works.has_next %}
-        <li class="page-item"><a href="?page={{works.next_page_number}}" class="page-link">next</a></li>
-        <li class="page-item"><a href="?page={{works.paginator.num_pages}}" class="page-link">Last &raquo </a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page={{works.next_page_number}}"
+                class="page-link">next</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page={{works.paginator.num_pages}}" class="page-link">Last
+                &raquo </a></li>
 
 
         {% else %}

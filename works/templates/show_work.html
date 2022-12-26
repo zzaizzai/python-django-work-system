@@ -25,12 +25,12 @@
 
 <div class="card mb-5">
     <div class="card-header d-flex">
-        <h5 class="mr-auto">{{work.title}} </h5>
+        <h5 class="mr-auto">({{work.id}}.) {{work.title}} </h5>
         <div>Status</div>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Due: {{work.date_due}}</h5>
-        <p class="card-text">{{work.description}}</p>
+        <h5 class="card-title">Due: {{work.date_due|date:"Y-m-j" }}</h5>
+        <p class="card-text">Description: {{work.description}}</p>
         <div>
             Team: <a href="{% url 'show_team' work.team.id  %}">{{work.team}}</a>
         </div>
@@ -59,9 +59,22 @@
 
 
 
+<div class="card">
+    <div class="card-header d-flex">
+        {% if counts.commissions > 0 %}
+        <h5>{{counts.commissions}} commissions</h5>
+        {% else %}
+        <h5 style="color: gray;">{{counts.commissions}} Commissions</h5>
+        {% endif %}
+    </div>
+</div>
+
+
 {% for commission in child_commissions %}
 
 {% if commission.datetime_completed %}
+
+
 <div class="card" style="background-color: gainsboro;">
     {% else %}
     <div class="card">
@@ -78,14 +91,35 @@
         </div>
     </div>
     {% empty %}
-    <div class="card">
+    <!-- <div class="card">
         <div class="card-header d-flex">
             <h5>No commission</h5>
         </div>
-    </div>
+    </div> -->
     {% endfor %}
 
     {% endif %}
+    <br>
+    <br>
+    <div class="card mt-5">
+        <div class="card-header d-flex">{{counts.comments}} Comments</div>
+        <div class="card-body">
+            {% for comment in comments %}
+            <div class="mb-2 d-flex">
+                <div class="font-weight-bold mr-1">{{comment.created_by.username}} : </div>
+                <div>{{comment.description}}</div>
+                <div class="ml-2 text-muted">{{comment.created_at|date:"y-n-j H:i"}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
+    <form class="d-flex" action=""><textarea placeholder="Add Comments" class="form-control" name="" id="" rows="2"
+            disabled></textarea>
+        <button class="btn btn-outline-primary" disabled>Send</button>
+    </form>
+
+    <br>
+    <br>
 
     {% endblock %}

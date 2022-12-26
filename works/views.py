@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Work
+from .models import Work, WorkComment
 from .forms import WorkForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
@@ -42,7 +42,17 @@ def show_work(request, work_id):
     work = Work.objects.get(pk=work_id)
     child_commissions = Commission.objects.filter(
         parent_work__id=work.id).order_by('-created_at')
-    return render(request, 'show_work.html', {"work": work, "child_commissions": child_commissions})
+
+    comments = WorkComment.objects.filter(
+        parent_work__id=work.id).order_by('created_at')
+
+    counts = {"commissions": child_commissions.count(),
+              "comments": comments.count()}
+    return render(request, 'show_work.html',
+                  {"work": work,
+                   "child_commissions": child_commissions,
+                   "comments": comments,
+                   "counts": counts})
 
 
 def add_work(request):
