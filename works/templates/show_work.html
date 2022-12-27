@@ -47,7 +47,7 @@
             {% else %}
             {% endif %}
         </div>
-        <button class="btn btn-sm btn-outline-secondary mx-2">Modify</button>
+        <a href="{% url 'edit_work' work.id %}" class="btn btn-sm btn-outline-secondary mx-2">Modify</a>
         <a class="btn btn-sm btn-outline-primary" href="{% url 'add_commission' work.id  %}">Add Commission</a>
     </div>
 
@@ -72,7 +72,7 @@
 
 {% for commission in child_commissions %}
 
-{% if commission.datetime_completed %}
+{% if commission.datetime_completed or commission.is_cancled %}
 
 
 <div class="card" style="background-color: gainsboro;">
@@ -83,9 +83,15 @@
         <div class="card-header d-flex">
             <h5 class="mr-auto">({{commission.id}}.) <a style="color: black;"
                     href="{% url 'show_commission' commission.id %}">{{commission.title}}</a> </h5>
-            <div class="font-weight-bold">{% if commission.datetime_completed %}
-                <span class="text-primary">Completed</span> {% else %}
-                <span class="text-danger">Waitting</span>
+            <div class="font-weight-bold">
+                {% if not commission.is_cancled %}
+                {% if commission.datetime_completed %}
+                <span class="text-primary font-weight-bold">Completed</span>
+                {% else %}
+                <span class="text-danger font-weight-bold">Waitting</span>
+                {% endif %}
+                {% else %}
+                <span class="text-muted font-weight-bold">Cancled</span>
                 {% endif %}
             </div>
         </div>
@@ -114,10 +120,15 @@
         </div>
     </div>
 
-    <form class="d-flex" action=""><textarea placeholder="Add Comments" class="form-control" name="" id="" rows="2"
-            disabled></textarea>
-        <button class="btn btn-outline-primary" disabled>Send</button>
+    <form action="" method="POST">
+        {% csrf_token %}
+    
+        {{form_comment.as_p}}
+        <input type="submit" value="Add Comment" class="btn btn-primary">
+    
+    
     </form>
+
 
     <br>
     <br>

@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Work, WorkComment
-from .forms import WorkForm
+from .forms import WorkForm, WorkCommentForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from commissions.models import Commission
@@ -39,6 +39,24 @@ def all_works(request):
 
 
 def show_work(request, work_id):
+
+    form_comment = WorkCommentForm(request.POST)
+
+    if request.method == "POST":
+
+        parent_work = Work.objects.get(pk=work_id)
+
+        if form_comment.is_valid() and request.user and parent_work:
+
+            comment = form_comment.save(commit=False)
+            comment.parent_work = parent_work
+            comment.created_by = request.user
+            comment.save()
+            return HttpResponseRedirect(f'/works/show_work/{work_id}')
+        else:
+            print("do nothing")
+            return HttpResponseRedirect(f'/works/show_work/{work_id}')
+
     work = Work.objects.get(pk=work_id)
     child_commissions = Commission.objects.filter(
         parent_work__id=work.id).order_by('-created_at')
@@ -52,7 +70,9 @@ def show_work(request, work_id):
                   {"work": work,
                    "child_commissions": child_commissions,
                    "comments": comments,
-                   "counts": counts})
+                   "counts": counts,
+                   "form_comment": form_comment
+                   })
 
 
 def add_work(request):
@@ -72,3 +92,18 @@ def add_work(request):
 
     form = WorkForm(request.POST)
     return render(request, 'add_work.html', {"form": form, 'submitted': submitted})
+
+
+def edit_work(request, work_id):
+
+    work = Work.objects.get(pk=work_id)
+
+    form = WorkForm(request.POST or None, instance=work)
+
+    if form.is_valid():
+        form.save()
+        return redirect(f'/works/show_work/{work_id}')
+
+    return render(request, "edit_work.html",
+                  {"work": work,
+                   "form": form})

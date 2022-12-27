@@ -64,6 +64,21 @@ def show_commission(request, commission_id):
                   })
 
 
+def edit_commission(request, commission_id):
+
+    commission = Commission.objects.get(pk=commission_id)
+
+    form = CommissionForm(request.POST or None, instance=commission)
+
+    if form.is_valid():
+        form.save()
+        return redirect(f'/commissions/show_commission/{commission_id}')
+
+    return render(request, "edit_commission.html",
+                  {"commission": commission,
+                   "form": form})
+
+
 def complete_commission(request):
     # return
     return JsonResponse("ddd")
@@ -81,7 +96,9 @@ def add_commission(request, work_id):
             commission.created_by = request.user
             commission.parent_work = parent_work
             commission.save()
-        return HttpResponseRedirect('/commissions/all_commissions')
+        messages.success(request, ("saved commission"))
+        return HttpResponseRedirect(f'/works/show_work/{work_id}')
+
     else:
         form = CommissionForm
         if 'sumitted' in request.GET:

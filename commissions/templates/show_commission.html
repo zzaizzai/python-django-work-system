@@ -39,7 +39,18 @@
 <div class="card">
     <div class="card-header d-flex">
         <h5 class="mr-auto">({{commission.id}}.) {{commission.title}} </h5>
-        <div>{% if commission.datetime_completed %}Completed{% else %}Waitting{% endif %}</div>
+        <div>
+            {% if not commission.is_cancled %}
+            {% if commission.datetime_completed %}
+            <span class="text-primary font-weight-bold">Completed</span>
+            {% else %}
+            <span class="text-danger font-weight-bold">Waitting</span>
+            {% endif %}
+            {% else %}
+            <span class="text-muted font-weight-bold">Cancled</span>
+            {% endif %}
+
+        </div>
 
     </div>
     <div class="card-body">
@@ -60,16 +71,21 @@
             {% else %}
             {% endif %}
         </div>
-        <button class="btn disabled btn-sm btn-outline-secondary mx-2">Modify</button>
-        <button class="btn disabled btn-sm btn-outline-danger mx-2">Cancle</button>
+        <a href="{% url 'edit_commission' commission.id %}" class="btn btn-sm btn-outline-secondary mx-2">Modify</a>
+        <button class="btn disabled btn-sm btn-outline-danger mx-2" disabled>Cancle</button>
         {% if commission.datetime_completed %}
         <button name="complete" value="complete" id="complete_commission"
             class="btn disabled btn-sm btn-outline-success mx-2">Done</button>
         {% else %}
         <form action="" method="POST">
             {% csrf_token %}
+            {% if not commission.is_cancled %}
             <button method="submit" name="complete" value="complete" id="complete_commission"
                 class="btn btn-sm btn-success mx-2">Done</button>
+            {% else %}
+            <button disabled method="submit" name="complete" value="complete" id="complete_commission"
+                class="btn btn-sm btn-success mx-2">Done</button>
+            {% endif %}
         </form>
         {% endif %}
 

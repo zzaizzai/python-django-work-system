@@ -7,7 +7,7 @@ class CommissionForm(ModelForm):
     class Meta:
         model = Commission
 
-        fields = ('title', 'team', 'date_due', 'description')
+        fields = ('title', 'team', 'date_due', 'description', 'is_cancled')
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'title'}),

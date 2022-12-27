@@ -2,6 +2,8 @@
 
 https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
 
+develop date : 22/12/21 ~
+
 ```:version
 Django 3.1.13
 python 3.9
@@ -15,9 +17,7 @@ python manage.py runserver
 
 all users password: qwer1234qwer
 
-
 ---
-
 
 # django-boilerplate
 

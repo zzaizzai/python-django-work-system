@@ -22,6 +22,7 @@ class Commission(models.Model):
         Work, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.CharField(
         'description', blank=True, null=True, max_length=10000)
+    is_cancled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

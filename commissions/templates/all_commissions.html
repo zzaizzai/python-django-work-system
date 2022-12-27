@@ -19,7 +19,7 @@
             <th scope="col">team in charge</th>
             <th scope="col">Due</th>
             <th scope="col">created_at</th>
-            <th scope="col">Completed</th>
+            <th scope="col">Status</th>
         </tr>
     </thead>
     {% if commissions %}
@@ -32,20 +32,27 @@
             <td><a href="{% url 'show_member' commission.created_by.id %}">{{commission.created_by.username}} </a></td>
             <td><a href="{% url 'show_team' commission.team.id %}">{{commission.team.name}} </a></td>
             <td>
-                <div class="d-flex"> {% if commission.status_due == 'over'%} <div
-                        class="text-danger font-weight-bold">{{commission.date_due|date:"y-m-j"}}
+                <div class="d-flex"> {% if commission.status_due == 'over'%} <div class="text-danger font-weight-bold">
+                        {{commission.date_due|date:"y-m-j"}}
                     </div>
-                    {% else  %}
+                    {% else %}
                     <div>{{commission.date_due|date:"y-m-j"}}</div>
-                    {% endif %}</div>
+                    {% endif %}
+                </div>
             </td>
             <td>{{commission.created_at|date:"y-m-j H:i"}} </td>
 
-            <td> {% if commission.datetime_completed %}
-                {{commission.datetime_completed|date:"y-n-j H:i"}}
+            <td>
+                {% if not commission.is_cancled %}
+                {% if commission.datetime_completed %}
+                <span class="text-primary font-weight-bold">Completed</span>
                 {% else %}
-                -
-                {% endif %}</td>
+                <span class="text-danger font-weight-bold">Waitting</span>
+                {% endif %}
+                {% else %}
+                <span class="text-muted font-weight-bold">Cancled</span>
+                {% endif %}
+            </td>
 
         </tr>
     </tbody>
