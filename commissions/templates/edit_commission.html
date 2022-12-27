@@ -15,7 +15,7 @@
 <h4>Parent Work</h4>
 <div class="card mb-5">
     <div class="card-header d-flex">
-        <h5 class="card-title">({{parent_work.id}}.) <a href="">{{parent_work.title}}</a></h5>
+        <h5 class="card-title">No.{{commission.parent_work.id}} {{commission.parent_work.title}}</h5>
 
     </div>
     <!-- Vertical line -->
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<h4>Add Commission</h4>
+<h4>Modify Commission</h4>
 
 <form action="" method="POST">
     {% csrf_token %}

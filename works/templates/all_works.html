@@ -41,9 +41,9 @@
         <tbody>
             <tr>
                 <td>{{work.id}}</td>
-                <td><a href="{%  url 'show_work' work.id %}">{{work.title}} </a></td>
-                <td><a href="{%  url 'show_member' work.created_by.id %}">{{work.created_by}} </a></td>
-                <td><a href="{% url 'show_team' work.team.id %}">{{work.team.name}} </a></td>
+                <td><a href="{%  url 'show_work' work.id %}" class="text-dark">{{work.title}} </a></td>
+                <td><a href="{%  url 'show_member' work.created_by.id %}" class="text-dark">{{work.created_by}} </a></td>
+                <td><a href="{% url 'show_team' work.team.id %}" class="text-dark">{{work.team.name}} </a></td>
                 <td>{{work.date_due|date:"y-m-j"}} </td>
                 <td>{{work.created_at|date:"y-m-j H:i"}} </td>
                 <td>-

@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 
 def all_teams(request):
     teams = Team.objects.all().order_by('-id')
+    for team in teams:
+        num_members = Member_Team.objects.filter(team__id = team.id).count()
+        team.num_members = int(num_members)
     return render(request, 'all_teams.html', {"teams": teams})
 
 

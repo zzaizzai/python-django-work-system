@@ -34,4 +34,4 @@ class CommissionComment(models.Model):
     created_by = models.ForeignKey(
         User, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.CharField(
-        'Work description', max_length=500, null=True)
+        'Work description', max_length=500, blank=True,  null=True)

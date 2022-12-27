@@ -13,7 +13,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">id</th>
+            <th scope="col">#</th>
             <th scope="col" style="width: 40%;">title</th>
             <th scope="col">created_by</th>
             <th scope="col">team in charge</th>
@@ -28,9 +28,9 @@
         <tr>
             <td>{{commission.id}}
             </td>
-            <td><a href="{% url 'show_commission'  commission.id %}">{{commission.title}} </a></td>
-            <td><a href="{% url 'show_member' commission.created_by.id %}">{{commission.created_by.username}} </a></td>
-            <td><a href="{% url 'show_team' commission.team.id %}">{{commission.team.name}} </a></td>
+            <td><a href="{% url 'show_commission'  commission.id %}" class="text-dark">{{commission.title}} </a></td>
+            <td><a href="{% url 'show_member' commission.created_by.id %}" class="text-dark">{{commission.created_by.username}} </a></td>
+            <td><a href="{% url 'show_team' commission.team.id %}" class="text-dark">{{commission.team.name}} </a></td>
             <td>
                 <div class="d-flex"> {% if commission.status_due == 'over'%} <div class="text-danger font-weight-bold">
                         {{commission.date_due|date:"y-m-j"}}

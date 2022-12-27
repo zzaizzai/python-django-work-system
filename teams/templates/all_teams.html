@@ -25,9 +25,9 @@
         <tr>
             <td>{{team.id}}
             </td>
-            <td><a href="{% url 'show_team' team.id %}">{{team.name}} </a></td>
-            <td>{{team.created_at}} </td>
-            <td>--</td>
+            <td><a href="{% url 'show_team' team.id %}" class="text-dark">{{team.name}} </a></td>
+            <td>{{team.created_at|date:"y-m-j H:i"}} </td>
+            <td>{{team.num_members}}</td>
 
         </tr>
     </tbody>

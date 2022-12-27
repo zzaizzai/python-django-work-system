@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from works.models import Work
 import datetime
-from .forms import CommissionForm
+from .forms import CommissionForm, CommissionCommentForm
 from .models import Commission, CommissionComment
 from django.http.response import JsonResponse
 from django.core.paginator import Paginator
@@ -44,12 +44,26 @@ def show_commission(request, commission_id):
     comments = CommissionComment.objects.filter(
         parent_commission__id=commission_id).order_by('created_at')
 
+    form_comment = CommissionCommentForm(request.POST)
+
     if request.method == "POST":
+
+        # complete commission
         if request.POST.get('complete', None):
             commission.datetime_completed = datetime.datetime.now(
                 datetime.timezone.utc)
             commission.user_completed = request.user.id
             commission.save()
+            return HttpResponseRedirect(f'/commissions/show_commission/{commission_id}')
+
+        # add comment at this commission
+        parent_commission = Commission.objects.get(pk=commission_id)
+        if form_comment.is_valid() and request.user and parent_commission and request.POST.get('description', None):
+            comment = form_comment.save(commit=False)
+            comment.parent_commission = parent_commission
+            comment.created_by = request.user
+            comment.save()
+            return HttpResponseRedirect(f'/commissions/show_commission/{commission_id}')
 
     if commission.user_completed:
         completed_by = User.objects.get(pk=commission.user_completed)
@@ -60,7 +74,8 @@ def show_commission(request, commission_id):
                   {
                       "commission": commission,
                       "completed_by": completed_by,
-                      "comments": comments
+                      "comments": comments,
+                      "form_comment": form_comment
                   })
 
 
@@ -77,6 +92,14 @@ def edit_commission(request, commission_id):
     return render(request, "edit_commission.html",
                   {"commission": commission,
                    "form": form})
+
+
+def cancle_commission(request, commission_id):
+    print(commission_id)
+    commission = Commission.objects.get(pk=commission_id)
+    commission.is_cancled = True
+    commission.save()
+    return redirect(f'/commissions/show_commission/{commission_id}')
 
 
 def complete_commission(request):

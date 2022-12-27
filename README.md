@@ -1,4 +1,4 @@
-# hosted in cloud type
+# hosting Page
 
 https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
 
@@ -17,7 +17,12 @@ python manage.py runserver
 
 all users password: qwer1234qwer
 
+
+I appreciate Cloud Cype (https://cloudtype.io/) for free and fast hosting service
+
+
 ---
+
 
 # django-boilerplate
 
