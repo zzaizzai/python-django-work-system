@@ -9,7 +9,6 @@
 <br>
 <br>
 
-
 <table class="table">
     <thead>
         <tr>
@@ -29,7 +28,8 @@
             <td>{{commission.id}}
             </td>
             <td><a href="{% url 'show_commission'  commission.id %}" class="text-dark">{{commission.title}} </a></td>
-            <td><a href="{% url 'show_member' commission.created_by.id %}" class="text-dark">{{commission.created_by.username}} </a></td>
+            <td><a href="{% url 'show_member' commission.created_by.id %}"
+                    class="text-dark">{{commission.created_by.username}} </a></td>
             <td><a href="{% url 'show_team' commission.team.id %}" class="text-dark">{{commission.team.name}} </a></td>
             <td>
                 <div class="d-flex"> {% if commission.status_due == 'over'%} <div class="text-danger font-weight-bold">
@@ -61,14 +61,13 @@
 </table>
 
 
-
 <nav aria-label="Page navigation example">
     <ul class="pagination">
 
-        {% if works.has_previous %}
+        {% if commissions.has_previous %}
 
         <li class="page-item"><a href="?page=1" class="page-link">&laquo First</a></li>
-        <li class="page-item"><a href="?page={{venues.previous_page_number}}" class="page-link">previous</a></li>
+        <li class="page-item"><a href="?page={{commissions.previous_page_number}}" class="page-link">previous</a></li>
 
         {% else %}
 
@@ -77,17 +76,20 @@
 
         {% endif %}
 
-
         {% for i in nums %}
-
+        {% if commissions.number == forloop.counter %}
+        <li class="page-item disabled"><a class="page-link " href="?page={{forloop.counter}}">{{forloop.counter}}
+            </a></li>
+        {% else %}
         <li class="page-item"><a class="page-link " href="?page={{forloop.counter}}">{{forloop.counter}}
             </a></li>
-
+        {% endif %}
         {% endfor %}
 
-        {% if works.has_next %}
-        <li class="page-item"><a href="?page={{works.next_page_number}}" class="page-link">next</a></li>
-        <li class="page-item"><a href="?page={{works.paginator.num_pages}}" class="page-link">Last &raquo </a></li>
+        {% if commissions.has_next %}
+        <li class="page-item"><a href="?page={{commissions.next_page_number}}" class="page-link">next</a></li>
+        <li class="page-item"><a href="?page={{commissions.paginator.num_pages}}" class="page-link">Last &raquo </a>
+        </li>
 
 
         {% else %}
@@ -99,10 +101,6 @@
 
     </ul>
 </nav>
-
-
-
-
 
 
 {% endblock %}

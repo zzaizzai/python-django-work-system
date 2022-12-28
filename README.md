@@ -1,8 +1,13 @@
-# hosting Page
+# Hosting Page
 
 https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
 
 develop date : 22/12/21 ~
+
+I am building a system that could be replaced with current paper system in ordinarily old my company. The papaer system has demerit that you cant grasp the current work situation, which one has been done or not.. , we need visible and flexible one.
+
+I have been trying **simply, light, ease-to-use** work manage system.
+In this system, you can create a work(project) and make commissions which should be completed **by other department**. you can manage your team member's or your works **visibly and flexibly**.
 
 ```:version
 Django 3.1.13
@@ -10,12 +15,22 @@ python 3.9
 ```
 
 ```
+git clone https://github.com/zzaizzai/python-django-work-system.git
 cd python-django-work-system
 pip install -r requirements.txt
 python manage.py runserver
 ```
 
-all users password: qwer1234qwer
+admin 1234
+other users password: qwer1234qwer
+
+
+```:myapp/env
+DJANGO_SECRET=
+MYSQL_USER_PW=
+MYSQL_HOST=
+MYSQL_PORT=
+```
 
 
 I appreciate Cloud Cype (https://cloudtype.io/) for free and fast hosting service

@@ -21,12 +21,13 @@
     }
 </style>
 
-
 <div class="card mb-5">
     <div class="card-header d-flex">
-        <h5>({{commission.parent_work.id}}.) <a class="card-title" style="color: black;"
-                href="{% url 'show_work' commission.parent_work.id %}"> {{commission.parent_work.title}}</a></h5>
-
+        <h5>
+            <a class="card-title" style="color: black;" href="{% url 'show_work' commission.parent_work.id %}">
+                <span class="mr-1">No.{{commission.parent_work.id}}</span>
+                {{commission.parent_work.title}}</a>
+        </h5>
     </div>
     <!-- Vertical line -->
     <div style="text-align: center;">
@@ -38,7 +39,7 @@
 
 <div class="card">
     <div class="card-header d-flex">
-        <h5 class="mr-auto">({{commission.id}}.) {{commission.title}} </h5>
+        <h5 class="mr-auto"><span class="mr-1">No.{{commission.id}}</span> {{commission.title}} </h5>
         <div>
             {% if not commission.is_cancled %}
             {% if commission.datetime_completed %}
@@ -72,12 +73,12 @@
             {% endif %}
         </div>
         <a href="{% url 'edit_commission' commission.id %}" class="btn btn-sm btn-outline-secondary mx-2">Modify</a>
-        {% if commission.is_cancled %}
+        {% if commission.is_cancled or commission.datetime_completed %}
         <a class="btn btn-sm btn-outline-danger mx-2 disabled" disabled>Cancle</a>
         {% else %}
         <a href="{% url 'cancle_commission' commission.id %}" class="btn btn-sm btn-outline-danger mx-2">Cancle</a>
         {% endif %}
-        {% if commission.datetime_completed %}
+        {% if commission.is_cancled or commission.datetime_completed %}
         <button name="complete" value="complete" id="complete_commission"
             class="btn disabled btn-sm btn-outline-success mx-2" disabled>Done</button>
         {% else %}
@@ -97,6 +98,8 @@
 </div>
 <br>
 <br>
+
+<!-- Comments -->
 <div class="card mt-5">
     <div class="card-header d-flex">{{counts.comments}} Comments</div>
     <div class="card-body">

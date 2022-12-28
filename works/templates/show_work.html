@@ -25,7 +25,8 @@
 
 <div class="card mb-5">
     <div class="card-header d-flex">
-        <h5 class="mr-auto">({{work.id}}.) {{work.title}} </h5>
+        <h5 class="mr-auto"><span class="mr-1">No.{{work.id}}
+            </span> {{work.title}} </h5>
         <div>Status</div>
     </div>
     <div class="card-body">
@@ -81,8 +82,11 @@
         {% endif %}
 
         <div class="card-header d-flex">
-            <h5 class="mr-auto">({{commission.id}}.) <a style="color: black;"
-                    href="{% url 'show_commission' commission.id %}">{{commission.title}}</a> </h5>
+            <h5 class="mr-auto">
+                <a style="color: black;" href="{% url 'show_commission' commission.id %}">
+                    <span class="mr-1">No.{{commission.id}}</span>
+                    {{commission.title}}</a>
+            </h5>
             <div class="font-weight-bold">
                 {% if not commission.is_cancled %}
                 {% if commission.datetime_completed %}
@@ -114,7 +118,8 @@
             <div class="mb-2 d-flex">
                 <div class="font-weight-bold mr-1">{{comment.created_by.username}} : </div>
                 <div>{{comment.description}}</div>
-                <div class="ml-2 text-muted">{{comment.created_at|date:"y-n-j H:i"}}</div>
+                <div style="font-size: 80%;" class="d-flex align-items-end ml-2 text-muted">
+                    {{comment.created_at|date:"y-n-j H:i"}}</div>
             </div>
             {% endfor %}
         </div>
@@ -122,11 +127,11 @@
 
     <form action="" method="POST">
         {% csrf_token %}
-    
+
         {{form_comment.as_p}}
         <input type="submit" value="Add Comment" class="btn btn-primary">
-    
-    
+
+
     </form>
 
 

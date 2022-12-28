@@ -20,16 +20,16 @@
     </div>
     <div class="card-body">
         <div class="card-title">
-            <h5>{{member.username}}</h5>
+            <h5>Member Information</h5>
         </div>
         <p class="card-text"></p>
-        <p class="card-text">first_name: {{member.first_name}}</p>
-        <p class="card-text">last_name: {{member.last_name}}</p>
-        <p class="card-text">email: {{member.email}}</p>
-        <div>Team:</div>
+        <p class="card-text">First_name: {{member.first_name}}</p>
+        <p class="card-text">Last_name: {{member.last_name}}</p>
+        <p class="card-text">Email: {{member.email}}</p>
+        <h5>Teams:</h5>
         {% if teams %}
         {% for team in teams %}
-        <a href="{% url 'show_team' team.id %}">{{team}}</a>
+        <a class="mr-3 text-dark"  href="{% url 'show_team' team.id %}">{{team}}</a>
         {% endfor %}
         {% endif %}
 
@@ -40,7 +40,9 @@
     <div class="card-footer text-muted d-flex">
         <a href="{% url 'all_works' %}?searched={{member.username}}" class="btn btn-sm btn-outline-primary mr-2">Show
             Works</a>
+        <div class="btn btn-sm btn-outline-primary mr-2 disabled" disabled>Show commissions</div>
     </div>
+
 </div>
 
 
