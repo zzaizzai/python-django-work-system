@@ -12,6 +12,7 @@ def all_works(request):
     searched = request.GET.get('searched', None)
 
     page_limit: int = 5
+
     if searched:
 
         # search title or team name or username
@@ -77,7 +78,7 @@ def show_work(request, work_id):
 
 def add_work(request):
     submitted = False
-
+    
     if request.method == "POST":
         form = WorkForm(request.POST)
         if form.is_valid():
@@ -91,6 +92,7 @@ def add_work(request):
             submitted = True
 
     form = WorkForm(request.POST)
+    
     return render(request, 'add_work.html', {"form": form, 'submitted': submitted})
 
 

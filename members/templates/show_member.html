@@ -40,7 +40,7 @@
     <div class="card-footer text-muted d-flex">
         <a href="{% url 'all_works' %}?searched={{member.username}}" class="btn btn-sm btn-outline-primary mr-2">Show
             Works</a>
-        <div class="btn btn-sm btn-outline-primary mr-2 disabled" disabled>Show commissions</div>
+        <a href="{% url 'all_commissions' %}?searched={{member.username}}" class="btn btn-sm btn-outline-primary mr-2 ">Show commissions</a>
     </div>
 
 </div>

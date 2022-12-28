@@ -10,16 +10,26 @@ from .forms import CommissionForm, CommissionCommentForm
 from .models import Commission, CommissionComment
 from django.http.response import JsonResponse
 from django.core.paginator import Paginator
-from django.utils import timezone
+from django.db.models import Q
 
 
 def all_commissions(request):
 
+    searched = request.GET.get('searched', None)
+
     page_limit: int = 5
 
-    # commissions = Commission.objects.all().order_by('-created_at')
+    if searched:
+        p = Paginator(Commission.objects.all().filter(
+            Q(title__contains=searched) |
+            Q(team__name__contains=searched) |
+            Q(created_by__username__contains=searched)
 
-    p = Paginator(Commission.objects.all().order_by('-created_at'), page_limit)
+        ).order_by('-created_at'), page_limit)
+    else:
+        searched = ""
+        p = Paginator(Commission.objects.all().order_by(
+            '-created_at'), page_limit)
 
     page = request.GET.get('page')
     commissions = p.get_page(page)
@@ -33,7 +43,7 @@ def all_commissions(request):
             commission.status_due = "over"
 
     return render(request, 'all_commissions.html',
-                  {
+                  {   "searched": searched,
                       "nums": nums,
                       "commissions": commissions})
 
