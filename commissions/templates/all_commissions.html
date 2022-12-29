@@ -9,13 +9,25 @@
 <br>
 <br>
 
+
+
+
 <div class="d-flex mb-3">
     <div class="mr-auto"></div>
-    <form class="form-inline " method="GET" action="{% url 'all_commissions' %}?searched=">
+    <form class="form-inline mr-2" method="GET" action="{% url 'all_commissions' %}?searched=">
         <input style="width: 300px;" class="form-control mr-sm-2" value="{{searched}}" name="searched" type="search"
             placeholder="title or team or user" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+    <div class="btn-group">
+        <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            Sort
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item " href="?searched={{searched}}&page=1&sort=-created_at">Created</a>
+            <a class="dropdown-item" href="?searched={{searched}}&page=1&sort=-date_due">Due</a>
+        </div>
+    </div>
 </div>
 
 
@@ -37,7 +49,7 @@
         <tr>
             <td>{{commission.id}}
             </td>
-            <td><a href="{% url 'show_commission'  commission.id %}" class="text-dark">{{commission.title}} </a></td>
+            <td><a href="{% url 'show_commission'  commission.id %}" class="text-dark font-weight-bold">{{commission.title}} </a></td>
             <td><a href="{% url 'show_member' commission.created_by.id %}"
                     class="text-dark">{{commission.created_by.username}} </a></td>
             <td><a href="{% url 'show_team' commission.team.id %}" class="text-dark">{{commission.team.name}} </a></td>
@@ -76,8 +88,9 @@
 
         {% if commissions.has_previous %}
 
-        <li class="page-item"><a href="?searched={{searched}}&page=1" class="page-link">&laquo First</a></li>
-        <li class="page-item"><a href="?searched={{searched}}&page={{commissions.previous_page_number}}" class="page-link">previous</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page=1&sort={{sort}}" class="page-link">&laquo First</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page={{commissions.previous_page_number}}&sort={{sort}}"
+                class="page-link">previous</a></li>
 
         {% else %}
 
@@ -88,17 +101,21 @@
 
         {% for i in nums %}
         {% if commissions.number == forloop.counter %}
-        <li class="page-item disabled"><a class="page-link " href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
+        <li class="page-item disabled"><a class="page-link "
+                href="?searched={{searched}}&page={{forloop.counter}}&sort={{sort}}">{{forloop.counter}}
             </a></li>
         {% else %}
-        <li class="page-item"><a class="page-link " href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
+        <li class="page-item"><a class="page-link "
+                href="?searched={{searched}}&page={{forloop.counter}}&sort={{sort}}">{{forloop.counter}}
             </a></li>
         {% endif %}
         {% endfor %}
 
         {% if commissions.has_next %}
-        <li class="page-item"><a href="?searched={{searched}}&page={{commissions.next_page_number}}" class="page-link">next</a></li>
-        <li class="page-item"><a href="?searched={{searched}}&page={{commissions.paginator.num_pages}}" class="page-link">Last &raquo </a>
+        <li class="page-item"><a href="?searched={{searched}}&page={{commissions.next_page_number}}&sort={{sort}}"
+                class="page-link">next</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page={{commissions.paginator.num_pages}}&sort={{sort}}"
+                class="page-link">Last &raquo </a>
         </li>
 
 

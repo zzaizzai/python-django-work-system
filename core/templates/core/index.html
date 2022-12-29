@@ -1,15 +1,26 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-	
-	<div>
-		<h3 class="info">
-			Work System 
-		</h3>
+<br>
+<br>
 
-		Works: such like project <br>
-		Commissions: requests for other departments in the work
-		
-	</div>
+<div>
+	<h3>
+		Simple Work and Commission System
+	</h3>
+	<br>
+
+	{% if user.is_authenticated %}
+	<h4>Hello {{user.username}} !!</h4>
+	{% else %}
+	<h4>Please login at menu button</h4>
+	{% endif %}
+
+	<br>
+
+	Works: your (or your team's) project<br>
+	Commissions (child of a work): requests for other departments in the work
+
+</div>
 
 {% endblock %}

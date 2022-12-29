@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from works.models import Work
+from teams.models import Member_Team
 import datetime
 from .forms import CommissionForm, CommissionCommentForm
 from .models import Commission, CommissionComment
@@ -15,21 +16,23 @@ from django.db.models import Q
 
 def all_commissions(request):
 
+    sort = searched = request.GET.get('sort', '-created_at')
+
     searched = request.GET.get('searched', None)
 
-    page_limit: int = 5
+    page_limit: int = 8
 
     if searched:
         p = Paginator(Commission.objects.all().filter(
-            Q(title__contains=searched) |
-            Q(team__name__contains=searched) |
-            Q(created_by__username__contains=searched)
+            Q(title__icontains=searched) |
+            Q(team__name__icontains=searched) |
+            Q(created_by__username__icontains=searched)
 
-        ).order_by('-created_at'), page_limit)
+        ).order_by(sort), page_limit)
     else:
         searched = ""
         p = Paginator(Commission.objects.all().order_by(
-            '-created_at'), page_limit)
+            sort), page_limit)
 
     page = request.GET.get('page')
     commissions = p.get_page(page)
@@ -43,9 +46,12 @@ def all_commissions(request):
             commission.status_due = "over"
 
     return render(request, 'all_commissions.html',
-                  {   "searched": searched,
+                  {
+                      "searched": searched,
+                      "sort": sort,
                       "nums": nums,
-                      "commissions": commissions})
+                      "commissions": commissions
+                  })
 
 
 def show_commission(request, commission_id):
@@ -80,12 +86,21 @@ def show_commission(request, commission_id):
     else:
         completed_by = None
 
+    # Check my whether it is team's work or not
+    is_myteam = False
+    my_teams = Member_Team.objects.filter(member__id=request.user.id)
+    names_my_team = [team.team.name for team in my_teams]
+
+    if commission.parent_work.team.name in names_my_team:
+        is_myteam = True
+
     return render(request, 'show_commission.html',
                   {
                       "commission": commission,
                       "completed_by": completed_by,
                       "comments": comments,
-                      "form_comment": form_comment
+                      "form_comment": form_comment,
+                      "is_myteam": is_myteam
                   })
 
 

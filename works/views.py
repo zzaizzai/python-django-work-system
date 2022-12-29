@@ -1,25 +1,27 @@
 from django.shortcuts import render, redirect
 from .models import Work, WorkComment
+from django.contrib import messages
 from .forms import WorkForm, WorkCommentForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from commissions.models import Commission
 from django.db.models import Q
+from teams.models import Member_Team
 # Create your views here.
 
 
 def all_works(request):
     searched = request.GET.get('searched', None)
 
-    page_limit: int = 5
+    page_limit: int = 8
 
     if searched:
 
         # search title or team name or username
         p = Paginator(Work.objects.all().filter(
-            Q(title__contains=searched) |
-            Q(team__name__contains=searched) |
-            Q(created_by__username__contains=searched)
+            Q(title__icontains=searched) |
+            Q(team__name__icontains=searched) |
+            Q(created_by__username__icontains=searched)
         ).order_by('-created_at'), page_limit)
 
     else:
@@ -28,6 +30,11 @@ def all_works(request):
 
     page = request.GET.get('page')
     works = p.get_page(page)
+
+    for work in works:
+        commissions_of_work = Commission.objects.filter(
+            parent_work__id=work.id)
+        work.count_commissions = commissions_of_work.count()
 
     nums = "a" * works.paginator.num_pages
 
@@ -67,33 +74,42 @@ def show_work(request, work_id):
 
     counts = {"commissions": child_commissions.count(),
               "comments": comments.count()}
+
+    # Check my whether it is team's work or not
+    is_myteam = False
+    my_teams = Member_Team.objects.filter(member__id=request.user.id)
+    names_my_team = [team.team.name for team in my_teams]
+
+    if work.team.name in names_my_team:
+        is_myteam = True
+
     return render(request, 'show_work.html',
-                  {"work": work,
-                   "child_commissions": child_commissions,
-                   "comments": comments,
-                   "counts": counts,
-                   "form_comment": form_comment
-                   })
+                  {
+                      "work": work,
+                      "child_commissions": child_commissions,
+                      "comments": comments,
+                      "counts": counts,
+                      "form_comment": form_comment,
+                      "is_myteam": is_myteam
+                  })
 
 
 def add_work(request):
-    submitted = False
-    
+
+
     if request.method == "POST":
         form = WorkForm(request.POST)
         if form.is_valid():
             work = form.save(commit=False)
             work.created_by = request.user
             work.save()
-        return HttpResponseRedirect('/works/add_work?sumitted=True')
-    else:
-        form = WorkForm
-        if 'sumitted' in request.GET:
-            submitted = True
+            messages.success(request, ("added new work"))
+        return HttpResponseRedirect('/works/all_works')
+
 
     form = WorkForm(request.POST)
-    
-    return render(request, 'add_work.html', {"form": form, 'submitted': submitted})
+
+    return render(request, 'add_work.html', {"form": form })
 
 
 def edit_work(request, work_id):

@@ -55,8 +55,18 @@
 
     </div>
     <div class="card-body">
-        <p class="card-text">created by: {{commission.created_by.username}} {{commission.parent_work.team}}</p>
-        <p class="card-text">{{commission.description}}</p>
+        <p class="card-text">Created by: <a
+                href="{% url 'show_member' commission.created_by.id %}">{{commission.created_by.username}}</a> <br>
+
+            Commission: <a
+                href="{% url 'show_team' commission.parent_work.team.id  %}">{{commission.parent_work.team}}</a>
+            -> <a href="{% url 'show_team'  commission.team.id %}">{{commission.team}}</a>
+        </p>
+
+        <hr>
+
+        <p class="card-text">
+        <h6>Description</h6>{{commission.description | linebreaks }}</p>
 
         {% if commission.datetime_completed %}
         <h5 class="card-text">Completed: {{commission.datetime_completed|date:"y-n-j H:i"}} by <a
@@ -72,23 +82,33 @@
             {% else %}
             {% endif %}
         </div>
+        <!-- Edit Button -->
+        {% if not is_myteam %}
+        <a class="btn btn-sm btn-outline-secondary mx-2 disabled" disabled>Edit</a>
+        {% else %}
         <a href="{% url 'edit_commission' commission.id %}" class="btn btn-sm btn-outline-secondary mx-2">Edit</a>
-        {% if commission.is_cancled or commission.datetime_completed %}
+        {% endif %}
+
+        <!-- Cancle Button -->
+        {% if commission.is_cancled or commission.datetime_completed or not is_myteam %}
         <a class="btn btn-sm btn-outline-danger mx-2 disabled" disabled>Cancle</a>
         {% else %}
         <a href="{% url 'cancle_commission' commission.id %}" class="btn btn-sm btn-outline-danger mx-2">Cancle</a>
         {% endif %}
-        {% if commission.is_cancled or commission.datetime_completed %}
+
+        <!-- Complete Button -->
+        {% if commission.is_cancled or commission.datetime_completed or not is_myteam %}
         <button name="complete" value="complete" id="complete_commission"
             class="btn disabled btn-sm btn-outline-success mx-2" disabled>Done</button>
         {% else %}
         <form action="" method="POST">
             {% csrf_token %}
-            {% if not commission.is_cancled %}
-            <button method="submit" name="complete" value="complete" id="complete_commission"
-                class="btn btn-sm btn-success mx-2">Done</button>
+            {% if commission.is_cancled %}
+
+            <button disabled class="btn btn-sm btn-success mx-2">Done</button>
+
             {% else %}
-            <button disabled method="submit" name="complete" value="complete" id="complete_commission"
+            <button method="submit" name="complete" value="complete" id="complete_commission"
                 class="btn btn-sm btn-success mx-2">Done</button>
             {% endif %}
         </form>
@@ -107,7 +127,7 @@
         <div class="mb-2 d-flex">
             <div class="font-weight-bold mr-1"><a style="color: black;"
                     href="{% url 'show_member' comment.created_by.id%}">{{comment.created_by.username}}</a> : </div>
-            <div>{{comment.description}}</div>
+            <div>{{comment.description }}</div>
             <div class="ml-2 text-muted">{{comment.created_at|date:"y-n-j H:i"}}</div>
         </div>
         {% endfor %}

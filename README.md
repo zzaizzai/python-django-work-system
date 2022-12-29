@@ -4,6 +4,9 @@ DEMO: https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.ap
 
 Developing : 22/12/21 ~ ( 23/1/8 )
 
+
+Work(your project)
+Commission(request for other team or task you have to)
 I am building a system that could be replaced with current paper system in ordinarily old my company. The papaer system has demerit that you cant grasp the current work situation, which one has been done or not.. , we need visible and flexible one.
 
 I have been trying **simple, light, ease-to-use** work manage system.

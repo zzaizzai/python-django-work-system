@@ -30,14 +30,19 @@
         <div>Status</div>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Due: {{work.date_due|date:"Y-m-j" }}</h5>
-        <p class="card-text">Description: {{work.description}}</p>
-        <div>
-            Team: <a href="{% url 'show_team' work.team.id  %}">{{work.team}}</a>
-        </div>
+        <h5>Due: {{work.date_due|date:"Y-m-j" }}</h5>
         <div>
             Created by: <a href="{% url 'show_member' work.created_by.id %}">{{work.created_by}}</a>
         </div>
+        <div>
+            Team: <a href="{% url 'show_team' work.team.id  %}">{{work.team}}</a>
+        </div>
+        <hr>
+
+        <p class="card-text">
+        <h6>Description </h6>{{work.description| linebreaks}}</p>
+
+
 
     </div>
     <div class="card-footer text-muted d-flex">
@@ -48,8 +53,15 @@
             {% else %}
             {% endif %}
         </div>
+        {% if not is_myteam %}
+        
+        <a class="btn btn-sm btn-outline-secondary mx-2 disabled" disabled>Edit</a>
+        <a class="btn btn-sm btn-outline-primary disabled" disabled>Add Commission</a>
+        {% else %}
         <a href="{% url 'edit_work' work.id %}" class="btn btn-sm btn-outline-secondary mx-2">Edit</a>
         <a class="btn btn-sm btn-outline-primary" href="{% url 'add_commission' work.id  %}">Add Commission</a>
+        {% endif %}
+
     </div>
 
     <!-- Vertical line -->
