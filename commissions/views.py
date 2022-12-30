@@ -74,6 +74,8 @@ def show_commission(request, commission_id):
                 datetime.timezone.utc)
             commission.user_completed = request.user.id
             commission.save()
+            CommissionHistory.objects.create(
+                kind="complete", parent_commission=commission, created_by=request.user)
             return HttpResponseRedirect(f'/commissions/show_commission/{commission_id}')
 
         # add comment at this commission
@@ -95,7 +97,7 @@ def show_commission(request, commission_id):
     my_teams = Member_Team.objects.filter(member__id=request.user.id)
     names_my_team = [team.team.name for team in my_teams]
 
-    if commission.parent_work.team.name in names_my_team:
+    if commission.parent_work.team.name in names_my_team or commission.team.name in names_my_team:
         is_myteam = True
 
     histories = CommissionHistory.objects.filter(
@@ -129,19 +131,29 @@ def edit_commission(request, commission_id):
 
 
 def cancle_commission(request, commission_id):
+    check_user_permission = False
 
     commission = Commission.objects.get(pk=commission_id)
-    commission.is_cancled = True
-    commission.save()
 
-    CommissionHistory.objects.create(
-        kind="cancle", parent_commission=commission, created_by=request.user)
-    return redirect(f'/commissions/show_commission/{commission_id}')
+    # the only member of wrok team can cancle chilc commission
+    teams = Member_Team.objects.filter(member__id=request.user.id)
+    names_of_user_team = [team.team.name for team in teams]
+    if commission.parent_work.team.name in names_of_user_team:
+        check_user_permission = True
+    else:
+        pass
 
+    if check_user_permission:
 
-def complete_commission(request):
-    # return
-    return JsonResponse("ddd")
+        commission.is_cancled = True
+        commission.save()
+        CommissionHistory.objects.create(
+            kind="cancle", parent_commission=commission, created_by=request.user)
+        return redirect(f'/commissions/show_commission/{commission_id}')
+
+    else:
+        messages.success(request, ("you have no permission"))
+        return redirect(f'/commissions/show_commission/{commission_id}')
 
 
 def add_commission(request, work_id):
@@ -167,4 +179,9 @@ def add_commission(request, work_id):
             submitted = True
 
     form = CommissionForm(request.POST)
-    return render(request, 'add_commission.html', {"form": form, 'submitted': submitted, "parent_work": parent_work})
+    return render(request, 'add_commission.html',
+                  {
+                      "form": form,
+                      'submitted': submitted,
+                      "parent_work": parent_work
+                  })

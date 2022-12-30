@@ -88,7 +88,7 @@ def show_work(request, work_id):
     if work.team.name in names_my_team:
         is_myteam = True
 
-    # show histories of 
+    # show histories of
     histories = WrokHistory.objects.filter(
         parent_work__id=work.id).exclude(kind__icontains="view").order_by('-created_at')
 

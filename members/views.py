@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
 from django.contrib.auth.models import User
+from works.models import WrokHistory
+from commissions.models import CommissionHistory
 from teams.models import Team
 
 # Create your views here.
@@ -17,9 +19,19 @@ def all_members(request):
 def show_member(request, member_id):
     member = User.objects.get(pk=member_id)
     teams = Team.objects.filter(member_team__member_id=member.id)
+
+    histories_commission = CommissionHistory.objects.filter(
+        created_by__id=member.id).exclude(kind__icontains="view").order_by('-created_at')[:10]
+    histories_work = WrokHistory.objects.filter(created_by__id=member.id).exclude(
+        kind__icontains="view").order_by('-created_at')[:10]
+
     return render(request, 'show_member.html',
-                  {"member": member,
-                   "teams": teams})
+                  {
+                      "member": member,
+                      "teams": teams,
+                      "histories_commission": histories_commission,
+                      "histories_work": histories_work
+                  })
 
 
 def register_user(request):

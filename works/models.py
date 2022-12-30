@@ -39,7 +39,7 @@ class WrokHistory(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         User, blank=True, null=True, on_delete=models.SET_NULL)
-    kind = models.CharField('add, view, edit, cancle', max_length=100)
+    kind = models.CharField('add, view, edit, cancle, complete', max_length=100)
 
     def __str__(self):
         return self.created_by.username + ' ' +  self.kind

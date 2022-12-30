@@ -29,7 +29,7 @@
         <h5>Teams:</h5>
         {% if teams %}
         {% for team in teams %}
-        <a class="mr-3 text-dark"  href="{% url 'show_team' team.id %}">{{team}}</a>
+        <a class="mr-3 text-dark" href="{% url 'show_team' team.id %}">{{team}}</a>
         {% endfor %}
         {% endif %}
 
@@ -40,8 +40,37 @@
     <div class="card-footer text-muted d-flex">
         <a href="{% url 'all_works' %}?searched={{member.username}}" class="btn btn-sm btn-outline-primary mr-2">Show
             Works</a>
-        <a href="{% url 'all_commissions' %}?searched={{member.username}}" class="btn btn-sm btn-outline-primary mr-2 ">Show commissions</a>
+        <a href="{% url 'all_commissions' %}?searched={{member.username}}"
+            class="btn btn-sm btn-outline-primary mr-2 ">Show commissions</a>
     </div>
+
+
+
+</div>
+
+<br>
+
+<div>
+    <h4>History</h4>
+    <h5>Commissions</h5>
+    {% for history in histories_commission %}
+    {{history.kind}}
+    of <a href="{% url 'show_commission' history.parent_commission.id %}">Commission No.
+        {{history.parent_commission.id}}</a>
+    {{history.created_at|date:"y-n-j H:i"}}
+    <br>
+    {% endfor %}
+    
+    <br>
+    
+    <h5>Works</h5>
+    {% for history in histories_work %}
+    {{history.kind}}
+    of <a href="{% url 'show_work' history.parent_work.id %}">Work No. {{history.parent_work.id}}</a>
+    {{history.created_at|date:"y-n-j H:i"}}
+    <br>
+    {% endfor %}
+
 
 </div>
 

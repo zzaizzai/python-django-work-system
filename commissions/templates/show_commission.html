@@ -2,9 +2,6 @@
 
 {% block content %}
 
-
-
-
 {% if form.erros %}
 <p>something worng with your form</p>
 {% endif %}
@@ -43,10 +40,13 @@
             </div>
             <div class="modal-body">
                 {% for history in histories %}
-                {{history.created_by.username}}
-                {{history.kind}}
-                {{history.created_at|date:"y-n-j H:i"}}
-                <br>
+                <div class="d-flex">
+                    <div class="mr-auto">
+                        {{history.created_by.username}}
+                        {{history.kind}}
+                    </div>
+                    <div>{{history.created_at|date:"y-n-j H:i"}}</div>
+                </div>
                 {% endfor %}
             </div>
             <div class="modal-footer">
@@ -55,8 +55,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <div class="card mb-5">
@@ -137,17 +135,17 @@
         <!-- Complete Button -->
         {% if commission.is_cancled or commission.datetime_completed or not is_myteam %}
         <button name="complete" value="complete" id="complete_commission"
-            class="btn disabled btn-sm btn-outline-success mx-2" disabled>Done</button>
+            class="btn disabled btn-sm btn-outline-success mx-2" disabled>Complete</button>
         {% else %}
         <form action="" method="POST">
             {% csrf_token %}
             {% if commission.is_cancled %}
 
-            <button disabled class="btn btn-sm btn-success mx-2">Done</button>
+            <button disabled class="btn btn-sm btn-success mx-2">Complete</button>
 
             {% else %}
             <button method="submit" name="complete" value="complete" id="complete_commission"
-                class="btn btn-sm btn-success mx-2">Done</button>
+                class="btn btn-sm btn-success mx-2">Complete</button>
             {% endif %}
         </form>
         {% endif %}

@@ -43,11 +43,13 @@
             </div>
             <div class="modal-body">
                 {% for history in histories %}
-                {{history.created_by.username}}
-                {{history.kind}}
-                {{history.created_at|date:"y-n-j H:i"}}
-                <br>
-
+                <div class="d-flex">
+                    <div class="mr-auto">
+                        {{history.created_by.username}}
+                        {{history.kind}}
+                    </div>
+                    <div>{{history.created_at|date:"y-n-j H:i"}}</div>
+                </div>
                 {% endfor %}
             </div>
             <div class="modal-footer">
