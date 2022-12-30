@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Work, WorkComment
+from .models import Work, WorkComment, WrokHistory
 from django.contrib import messages
 from .forms import WorkForm, WorkCommentForm
 from django.http import HttpResponseRedirect, HttpResponse
@@ -48,6 +48,12 @@ def all_works(request):
 
 def show_work(request, work_id):
 
+    work = Work.objects.get(pk=work_id)
+
+    if request.user:
+        WrokHistory.objects.create(
+            kind="view", parent_work=work, created_by=request.user)
+
     form_comment = WorkCommentForm(request.POST)
 
     if request.method == "POST":
@@ -65,7 +71,6 @@ def show_work(request, work_id):
             print("do nothing")
             return HttpResponseRedirect(f'/works/show_work/{work_id}')
 
-    work = Work.objects.get(pk=work_id)
     child_commissions = Commission.objects.filter(
         parent_work__id=work.id).order_by('-created_at')
 
@@ -83,6 +88,10 @@ def show_work(request, work_id):
     if work.team.name in names_my_team:
         is_myteam = True
 
+    # show histories of 
+    histories = WrokHistory.objects.filter(
+        parent_work__id=work.id).exclude(kind__icontains="view").order_by('-created_at')
+
     return render(request, 'show_work.html',
                   {
                       "work": work,
@@ -90,12 +99,12 @@ def show_work(request, work_id):
                       "comments": comments,
                       "counts": counts,
                       "form_comment": form_comment,
-                      "is_myteam": is_myteam
+                      "is_myteam": is_myteam,
+                      "histories": histories
                   })
 
 
 def add_work(request):
-
 
     if request.method == "POST":
         form = WorkForm(request.POST)
@@ -103,13 +112,14 @@ def add_work(request):
             work = form.save(commit=False)
             work.created_by = request.user
             work.save()
+            WrokHistory.objects.create(
+                kind="add", parent_work=work, created_by=request.user)
             messages.success(request, ("added new work"))
         return HttpResponseRedirect('/works/all_works')
 
-
     form = WorkForm(request.POST)
 
-    return render(request, 'add_work.html', {"form": form })
+    return render(request, 'add_work.html', {"form": form})
 
 
 def edit_work(request, work_id):
@@ -120,8 +130,12 @@ def edit_work(request, work_id):
 
     if form.is_valid():
         form.save()
+        WrokHistory.objects.create(
+            kind="edit", parent_work=work, created_by=request.user)
         return redirect(f'/works/show_work/{work_id}')
 
     return render(request, "edit_work.html",
-                  {"work": work,
-                   "form": form})
+                  {
+                      "work": work,
+                      "form": form
+                  })

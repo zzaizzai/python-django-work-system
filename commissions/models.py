@@ -35,3 +35,14 @@ class CommissionComment(models.Model):
         User, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.CharField(
         'Work description', max_length=500, blank=True,  null=True)
+
+
+class CommissionHistory(models.Model):
+    parent_commission = models.ForeignKey(Commission, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL)
+    kind = models.CharField('add, view, edit, cancle', max_length=100)
+
+    def __str__(self):
+        return self.created_by.username + ' ' + self.kind

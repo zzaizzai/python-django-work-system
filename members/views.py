@@ -61,7 +61,7 @@ def logout_user(request):
     logout(request)
     messages.success(request, ("logged out"))
 
-    return redirect('home')
+    return redirect('login_user')
 
 
 def mypage(request):

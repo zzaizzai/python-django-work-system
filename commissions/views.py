@@ -8,7 +8,7 @@ from works.models import Work
 from teams.models import Member_Team
 import datetime
 from .forms import CommissionForm, CommissionCommentForm
-from .models import Commission, CommissionComment
+from .models import Commission, CommissionComment, CommissionHistory
 from django.http.response import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -16,7 +16,7 @@ from django.db.models import Q
 
 def all_commissions(request):
 
-    sort = searched = request.GET.get('sort', '-created_at')
+    sort = request.GET.get('sort', '-created_at')
 
     searched = request.GET.get('searched', None)
 
@@ -57,6 +57,10 @@ def all_commissions(request):
 def show_commission(request, commission_id):
     commission = Commission.objects.get(pk=commission_id)
 
+    if request.user:
+        CommissionHistory.objects.create(
+            kind="view", parent_commission=commission, created_by=request.user)
+
     comments = CommissionComment.objects.filter(
         parent_commission__id=commission_id).order_by('created_at')
 
@@ -94,13 +98,16 @@ def show_commission(request, commission_id):
     if commission.parent_work.team.name in names_my_team:
         is_myteam = True
 
+    histories = CommissionHistory.objects.filter(
+        parent_commission__id=commission.id).exclude(kind__icontains="view").order_by('-created_at')
     return render(request, 'show_commission.html',
                   {
                       "commission": commission,
                       "completed_by": completed_by,
                       "comments": comments,
                       "form_comment": form_comment,
-                      "is_myteam": is_myteam
+                      "is_myteam": is_myteam,
+                      "histories": histories
                   })
 
 
@@ -112,6 +119,8 @@ def edit_commission(request, commission_id):
 
     if form.is_valid():
         form.save()
+        CommissionHistory.objects.create(
+            kind="edit", parent_commission=commission, created_by=request.user)
         return redirect(f'/commissions/show_commission/{commission_id}')
 
     return render(request, "edit_commission.html",
@@ -120,10 +129,13 @@ def edit_commission(request, commission_id):
 
 
 def cancle_commission(request, commission_id):
-    print(commission_id)
+
     commission = Commission.objects.get(pk=commission_id)
     commission.is_cancled = True
     commission.save()
+
+    CommissionHistory.objects.create(
+        kind="cancle", parent_commission=commission, created_by=request.user)
     return redirect(f'/commissions/show_commission/{commission_id}')
 
 
@@ -144,6 +156,8 @@ def add_commission(request, work_id):
             commission.created_by = request.user
             commission.parent_work = parent_work
             commission.save()
+            CommissionHistory.objects.create(
+                kind="add", parent_commission=commission, created_by=request.user)
         messages.success(request, ("saved commission"))
         return HttpResponseRedirect(f'/works/show_work/{work_id}')
 

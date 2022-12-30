@@ -1,9 +1,8 @@
-## Introduce 
+## Introduce
 
 DEMO: https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/
 
 Developing : 22/12/21 ~ ( 23/1/8 )
-
 
 Work(your project)
 Commission(request for other team or task you have to)
@@ -12,7 +11,8 @@ I am building a system that could be replaced with current paper system in ordin
 I have been trying **simple, light, ease-to-use** work manage system.
 In this system, you can create a work(project) and make commissions which should be completed **by other department**. you can manage your team member's or your works **visibly and flexibly**.
 
-```:version
+### version
+```
 Django 3.1.13
 python 3.9
 ```
@@ -28,19 +28,27 @@ admin 1234
 other users password: qwer1234qwer
 
 
-```:myapp/env
+### env
+```
 DJANGO_SECRET=
 MYSQL_USER_PW=
 MYSQL_HOST=
 MYSQL_PORT=
 ```
 
+### RECORD
+```
+22/12/21 created this project
+12/24 created basic frame (works and commissions)
+12/25 show commissions as child in work page
+12/27 add comments at work and commission page
+12/29 changed permission of edit, cancle buttons in work and commission (all users -> team users)
+12/30 add history of work
+```
 
 I appreciate Cloud Cype (https://cloudtype.io/) for free and fast hosting service
 
-
 ---
-
 
 # django-boilerplate
 
