@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from teams.models import Team
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -13,9 +14,9 @@ class Work(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     date_due = models.DateField('Work due')
     team = models.ForeignKey(
-        Team, blank=True, null=True, on_delete=models.SET_NULL)
-    description = models.CharField(
-        'Work description', max_length=10000, null=True)
+        Team, on_delete=models.CASCADE)
+    # description = models.CharField('Work description', max_length=10000, null=True)
+    description = RichTextField(blank=True, null=True)
     datetime_completed = models.DateTimeField(
         'completed datetime', blank=True, null=True)
     user_completed = models.IntegerField(

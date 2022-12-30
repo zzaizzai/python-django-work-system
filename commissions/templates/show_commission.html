@@ -102,7 +102,7 @@
         <hr>
 
         <p class="card-text">
-        <h6>Description</h6>{{commission.description | linebreaks }}</p>
+        <h6>Description</h6>{{commission.description | safe }}</p>
 
         {% if commission.datetime_completed %}
         <h5 class="card-text">Completed: {{commission.datetime_completed|date:"y-n-j H:i"}} by <a

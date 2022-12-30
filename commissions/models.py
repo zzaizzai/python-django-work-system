@@ -2,6 +2,7 @@ from django.db import models
 from works.models import Work
 from django.contrib.auth.models import User
 from teams.models import Team
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 
@@ -13,15 +14,16 @@ class Commission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     date_due = models.DateField('Work due')
     team = models.ForeignKey(
-        Team, blank=True, null=True, on_delete=models.SET_NULL)
+        Team, on_delete=models.CASCADE)
     datetime_completed = models.DateTimeField(
         'completed datetime', blank=True, null=True)
     user_completed = models.IntegerField(
         'completed user', blank=True, null=True)
     parent_work = models.ForeignKey(
         Work, blank=True, null=True, on_delete=models.SET_NULL)
-    description = models.CharField(
-        'description', blank=True, null=True, max_length=10000)
+    # description = models.CharField(
+        # 'description', blank=True, null=True, max_length=10000)
+    description = RichTextField(blank=True, null=True)
     is_cancled = models.BooleanField(default=False)
 
     def __str__(self):

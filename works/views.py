@@ -61,7 +61,6 @@ def show_work(request, work_id):
         parent_work = Work.objects.get(pk=work_id)
 
         if form_comment.is_valid() and request.user and parent_work:
-
             comment = form_comment.save(commit=False)
             comment.parent_work = parent_work
             comment.created_by = request.user
