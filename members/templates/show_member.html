@@ -52,7 +52,7 @@
 
 <div>
     <h4>History</h4>
-    <h5>Commissions</h5>
+    <h5>Commissions (limit 10)</h5>
     {% for history in histories_commission %}
     {{history.kind}}
     of <a href="{% url 'show_commission' history.parent_commission.id %}">Commission No.
@@ -63,7 +63,7 @@
     
     <br>
     
-    <h5>Works</h5>
+    <h5>Works (limit 10)</h5>
     {% for history in histories_work %}
     {{history.kind}}
     of <a href="{% url 'show_work' history.parent_work.id %}">Work No. {{history.parent_work.id}}</a>

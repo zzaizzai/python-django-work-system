@@ -44,9 +44,9 @@
             <div class="modal-body">
                 {% for history in histories %}
                 <div class="d-flex">
-                    <div class="mr-auto">
-                        {{history.created_by.username}}
-                        {{history.kind}}
+                    <div class="mr-auto d-flex">
+                        <div class="mr-2">{{history.created_by.username}}</div>
+                        <div style="text-transform: uppercase;">{{history.kind}}</div>
                     </div>
                     <div>{{history.created_at|date:"y-n-j H:i"}}</div>
                 </div>

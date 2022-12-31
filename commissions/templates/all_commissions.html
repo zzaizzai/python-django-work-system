@@ -16,11 +16,12 @@
     <div class="mr-auto"></div>
     <form class="form-inline mr-2" method="GET" action="{% url 'all_commissions' %}?searched=">
         <input style="width: 300px;" class="form-control mr-sm-2" value="{{searched}}" name="searched" type="search"
-            placeholder="title or team or user" aria-label="Search">
+            placeholder="title or team or user" aria-label="Search" autocomplete="off">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <div class="btn-group">
-        <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown"
+            aria-expanded="false">
             Sort
         </button>
         <div class="dropdown-menu">
@@ -49,7 +50,8 @@
         <tr>
             <td>{{commission.id}}
             </td>
-            <td><a href="{% url 'show_commission'  commission.id %}" class="text-dark font-weight-bold">{{commission.title}} </a></td>
+            <td><a href="{% url 'show_commission'  commission.id %}"
+                    class="text-dark font-weight-bold">{{commission.title}} </a></td>
             <td><a href="{% url 'show_member' commission.created_by.id %}"
                     class="text-dark">{{commission.created_by.username}} </a></td>
             <td><a href="{% url 'show_team' commission.team.id %}" class="text-dark">{{commission.team.name}} </a></td>
@@ -88,7 +90,8 @@
 
         {% if commissions.has_previous %}
 
-        <li class="page-item"><a href="?searched={{searched}}&page=1&sort={{sort}}" class="page-link">&laquo First</a></li>
+        <li class="page-item"><a href="?searched={{searched}}&page=1&sort={{sort}}" class="page-link">&laquo First</a>
+        </li>
         <li class="page-item"><a href="?searched={{searched}}&page={{commissions.previous_page_number}}&sort={{sort}}"
                 class="page-link">previous</a></li>
 

@@ -28,7 +28,6 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'all_teams' %}">List Teams</a>
-                    <div class="dropdown-divider"></div>
                 </div>
             </li>
 
@@ -63,13 +62,20 @@
 
             {% if user.is_authenticated %}
 
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{user.username}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'show_member' user.id %}">MyPage</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a>
+
+                </div>
+
             </li>
 
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'show_member' user.id %}">{{user.username}}'s Page</a>
-            </li>
 
             {% else %}
 
@@ -82,9 +88,5 @@
 
             {% endif %}
         </ul>
-        <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
     </div>
 </nav>

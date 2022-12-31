@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+{% if form.erros %}
+<p>something worng with your form</p>
+{% endif %}
+
+<br>
+<br>
+
+{% if user.is_authenticated %}
+
+
+<h4>Edit Team {{team.name}}</h4>
+
+
+
+<form action="" method="POST" autocomplete="off">
+    {% csrf_token %}
+
+    {% for member in members %}
+    <input type="checkbox" name="current_members">
+    {{member.member}}
+    <br>
+    {% endfor %}
+
+
+    <br>
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+
+</form>
+{% else %}
+<div>
+    Please login
+</div>
+{% endif %}
+
+<br>
+<br>
+
+
+{% endblock %}
