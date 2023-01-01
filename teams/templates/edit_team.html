@@ -16,19 +16,39 @@
 
 
 
+<!-- i dont want to add this button becuz it might... -->
+{% for member in members %}
+<div class="d-flex mb-1">
+    <div class="mr-auto">
+        {{member.member}} ({{member.id}})
+    </div> <button value="{{member.id}}" name="team_member_id" type="submit" disabled>X</button>
+</div>
+
+
+{% endfor %}
+
+
+
+
+<h4>Current Memers</h4>
 <form action="" method="POST" autocomplete="off">
     {% csrf_token %}
 
-    {% for member in members %}
-    <input type="checkbox" name="current_members">
-    {{member.member}}
-    <br>
-    {% endfor %}
 
 
     <br>
+    <h5>add new member</h5>
+    {% if form %}
+    {{form.member}}
+    {% endif %}
 
+
+
+    <br>
     <input type="submit" value="Submit" class="btn btn-primary">
+
+
+
 
 </form>
 {% else %}

@@ -18,7 +18,7 @@ def all_commissions(request):
 
     sort = request.GET.get('sort', '-created_at')
 
-    searched = request.GET.get('searched', None)
+    searched = request.GET.get('searched', "")
 
     page_limit: int = 8
 
@@ -33,8 +33,6 @@ def all_commissions(request):
                     key=lambda commission: commission.priority, reverse=True)
         p = Paginator(ss, page_limit)
     else:
-        if not searched:
-            searched = ""
         p = Paginator(Commission.objects.all().filter(
             Q(title__icontains=searched) |
             Q(team__name__icontains=searched) |

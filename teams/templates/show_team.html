@@ -22,17 +22,22 @@
         <h5 class="card-title"></h5>
         <p class="card-text">{{team.description}}</p>
         {% if members %}
-        members: <br>
+        Members: <br>
         <div class="d-flex">
             {% for memberInfo in members %}
 
-            <div class="mr-3"><a href="{% url 'show_member'  memberInfo.member.id %}">{{memberInfo.member}}</a></div>
+            <div class="mr-3"><a href="{% url 'show_member'  memberInfo.member.id %}"
+                    class="text-dark font-weight-bold">{{memberInfo.member}}</a></div>
             {% endfor %}
         </div>
         {% endif %}
     </div>
 </div>
 
+
+{% if user.is_authenticated %}
+<a href="{% url 'edit_team' team.id %}">Edit(Under construction)</a>
+{% endif %}
 
 
 
