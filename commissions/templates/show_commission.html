@@ -157,6 +157,7 @@
 <!-- Comments -->
 <div class="card mt-5">
     <div class="card-header d-flex">{{counts.comments}} Comments</div>
+    {% if comments %}
     <div class="card-body">
         {% for comment in comments %}
         <div class="mb-2 d-flex">
@@ -167,6 +168,8 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    {% endif %}
 </div>
 
 

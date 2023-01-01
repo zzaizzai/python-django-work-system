@@ -22,17 +22,25 @@ def all_commissions(request):
 
     page_limit: int = 8
 
-    if searched:
+    if sort == "priority":
+        objss = Commission.objects.all().filter(
+            Q(title__icontains=searched) |
+            Q(team__name__icontains=searched) |
+            Q(created_by__username__icontains=searched)
+
+        )
+        ss = sorted(objss,
+                    key=lambda commission: commission.priority, reverse=True)
+        p = Paginator(ss, page_limit)
+    else:
+        if not searched:
+            searched = ""
         p = Paginator(Commission.objects.all().filter(
             Q(title__icontains=searched) |
             Q(team__name__icontains=searched) |
             Q(created_by__username__icontains=searched)
 
         ).order_by(sort), page_limit)
-    else:
-        searched = ""
-        p = Paginator(Commission.objects.all().order_by(
-            sort), page_limit)
 
     page = request.GET.get('page')
     commissions = p.get_page(page)

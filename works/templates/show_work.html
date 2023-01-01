@@ -77,7 +77,8 @@
         <hr>
 
         <div class="card-text">
-        <h6>Description </h6>{{work.description|safe}}</div>
+            <h6>Description </h6>{{work.description|safe}}
+        </div>
 
     </div>
     <div class="card-footer text-muted d-flex">
@@ -160,6 +161,8 @@
     <br>
     <div class="card mt-5">
         <div class="card-header d-flex">{{counts.comments}} Comments</div>
+
+        {% if comments %}
         <div class="card-body">
             {% for comment in comments %}
             <div class="mb-2 d-flex">
@@ -170,14 +173,19 @@
             </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 
     <form action="" method="POST">
         {% csrf_token %}
 
         {{form_comment.as_p}}
-        <input type="submit" value="Add Comment" class="btn btn-primary">
 
+        {% if user.is_authenticated %}
+        <input type="submit" value="Add Comment" class="btn btn-primary">
+        {% else %}
+        <input type="submit" value="Add Comment" class="btn btn-primary disabled" disabled>
+        {% endif %}
 
     </form>
 

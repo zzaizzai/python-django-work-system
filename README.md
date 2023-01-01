@@ -48,6 +48,7 @@ MYSQL_PORT=
 12/27 added comments at work and commission page
 12/29 changeded permission of edit, cancle buttons in work and commission (all users -> team users)
 12/30 added history of work and commission, added style font (ckeditor)
+23/1/1 added priority of commission
 ```
 
 I appreciate Cloud Cype (https://cloudtype.io/) for free and fast hosting service
