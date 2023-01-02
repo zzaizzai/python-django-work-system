@@ -23,7 +23,7 @@ class Commission(models.Model):
     parent_work = models.ForeignKey(
         Work, blank=True, null=True, on_delete=models.SET_NULL)
     # description = models.CharField(
-        # 'description', blank=True, null=True, max_length=10000)
+    # 'description', blank=True, null=True, max_length=10000)
     description = RichTextField(blank=True, null=True)
     is_cancled = models.BooleanField(default=False)
     priority_point = models.IntegerField(default=1, blank=False, null=False)
@@ -35,22 +35,20 @@ class Commission(models.Model):
     def priority(self) -> int:
 
         now = datetime.datetime.now().date()
-        
+
         days_differ_due = self.date_due - now
         days_differ_created = self.created_at.date() - now
 
         days_due = days_differ_due.days
         days_created = days_differ_created.days
 
-        point_sum = -days_due*self.priority_point - days_created*self.priority_point
+        point_sum = -days_due*self.priority_point*2 - days_created*self.priority_point
 
         # canled or completed one has low priority
         if self.is_cancled or self.datetime_completed:
             point_sum -= 100
 
         return point_sum
-
-
 
 
 class CommissionComment(models.Model):
@@ -60,8 +58,6 @@ class CommissionComment(models.Model):
         User, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.CharField(
         'Work description', max_length=500, blank=True,  null=True)
-    
-
 
 
 class CommissionHistory(models.Model):

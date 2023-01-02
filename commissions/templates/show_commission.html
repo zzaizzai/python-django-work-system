@@ -56,7 +56,6 @@
     </div>
 </div>
 
-
 <div class="card mb-5">
     <div class="card-header d-flex">
         <h5>
@@ -70,8 +69,6 @@
         <div class="vertical"></div>
     </div>
 </div>
-
-
 
 <div class="card">
     <div class="card-header d-flex">
@@ -91,12 +88,15 @@
 
     </div>
     <div class="card-body">
-        <p class="card-text">Created by: <a
+        <div>
+            <h5>Due Date: {{commission.date_due |date:"y-n-j"}}</h5>
+        </div>
+        <p class="card-text">Created by: <a class="text-dark"
                 href="{% url 'show_member' commission.created_by.id %}">{{commission.created_by.username}}</a> <br>
 
-            Commission: <a
+            Commission: <a class="text-dark"
                 href="{% url 'show_team' commission.parent_work.team.id  %}">{{commission.parent_work.team}}</a>
-            -> <a href="{% url 'show_team'  commission.team.id %}">{{commission.team}}</a>
+            -> <a class="text-dark" href="{% url 'show_team'  commission.team.id %}">{{commission.team}}</a>
         </p>
 
         <hr>

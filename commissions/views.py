@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from works.models import Work
 from teams.models import Member_Team
 import datetime
 from .forms import CommissionForm, CommissionCommentForm
 from .models import Commission, CommissionComment, CommissionHistory
-from django.http.response import JsonResponse
+# from django.http.response import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -40,11 +40,10 @@ def all_commissions(request):
 
         ).order_by(sort), page_limit)
 
+    # create pages
     page = request.GET.get('page')
     commissions = p.get_page(page)
-
     today = datetime.date.today()
-
     nums = "a" * commissions.paginator.num_pages
 
     for commission in commissions:
@@ -63,7 +62,7 @@ def all_commissions(request):
 def show_commission(request, commission_id):
     commission = Commission.objects.get(pk=commission_id)
 
-    if request.user:
+    if not request.user.is_anonymous:
         CommissionHistory.objects.create(
             kind="view", parent_commission=commission, created_by=request.user)
 
@@ -86,12 +85,14 @@ def show_commission(request, commission_id):
 
         # add comment at this commission
         parent_commission = Commission.objects.get(pk=commission_id)
-        if form_comment.is_valid() and request.user and parent_commission and request.POST.get('description', None):
+        if form_comment.is_valid() and not request.user.is_anonymous and parent_commission and request.POST.get('description', None):
             comment = form_comment.save(commit=False)
             comment.parent_commission = parent_commission
             comment.created_by = request.user
             comment.save()
             return HttpResponseRedirect(f'/commissions/show_commission/{commission_id}')
+
+        messages.success(request, ("someting wrong"))
 
     if commission.user_completed:
         completed_by = User.objects.get(pk=commission.user_completed)
@@ -122,7 +123,6 @@ def show_commission(request, commission_id):
 def edit_commission(request, commission_id):
 
     commission = Commission.objects.get(pk=commission_id)
-
     form = CommissionForm(request.POST or None, instance=commission)
 
     if form.is_valid():
