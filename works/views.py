@@ -9,6 +9,10 @@ from django.db.models import Q
 from teams.models import Member_Team
 # Create your views here.
 
+import qrcode
+import qrcode.image.svg
+from io import BytesIO
+
 
 def all_works(request):
     searched = request.GET.get('searched', None)
@@ -90,7 +94,13 @@ def show_work(request, work_id):
     # show histories of
     histories = WrokHistory.objects.filter(
         parent_work__id=work.id).exclude(kind__icontains="view").order_by('-created_at')
-
+    url = request.build_absolute_uri()
+    factory = qrcode.image.svg.SvgImage
+    img = qrcode.make(url, image_factory=factory, box_size=15)
+    stream = BytesIO()
+    img.save(stream)
+    svg = stream.getvalue().decode()
+    
     return render(request, 'show_work.html',
                   {
                       "work": work,
@@ -99,7 +109,8 @@ def show_work(request, work_id):
                       "counts": counts,
                       "form_comment": form_comment,
                       "is_myteam": is_myteam,
-                      "histories": histories
+                      "histories": histories,
+                      "svg" : svg,
                   })
 
 

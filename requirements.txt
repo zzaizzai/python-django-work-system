@@ -7,3 +7,4 @@ gunicorn
 python-dotenv==0.21.0
 mysqlclient==2.1.1
 django-ckeditor==5.9.0
+qrcode==7.3.1

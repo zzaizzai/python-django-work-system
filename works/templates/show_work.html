@@ -11,7 +11,6 @@
     }
 </style>
 
-
 {% if form.erros %}
 <p>something worng with your form</p>
 {% endif %}
@@ -19,20 +18,42 @@
 <br>
 <br>
 
-
 {% if work %}
 
 <!-- show history of this work -->
 <div class="d-flex mb-3">
     <div class="mr-auto"></div>
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-outline-primary mr-3" data-toggle="modal" data-target="#history">
         Show History
     </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#qrcode"
+        data-whatever="@qrcode">QRCode</button>
+</div>
+
+<!-- Modal of QRCode -->
+<div class="modal fade" id="qrcode" tabindex="-1" role="dialog" aria-labelledby="qrcode" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">QRCode</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex">
+                <div class="mx-auto">
+                    {{ svg|safe }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal of history -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="history" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,7 +141,6 @@
 
 
 {% for commission in child_commissions %}
-
 {% if commission.datetime_completed or commission.is_cancled %}
 
 
@@ -189,6 +209,11 @@
 
     </form>
 
+
+    <br>
+    <br>
+
+    <h6>URL if you want</h6>
 
     <br>
     <br>
