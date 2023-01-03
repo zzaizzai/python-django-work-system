@@ -6,11 +6,11 @@
 
 Developing : 22/12/21 ~ 23/1/3
 
-**Work(your project)**
-**Commission(request for other team or task you have to)**
+**Work(your project)**     
+**Commission(request for other team or task you have to)**    
 I am building a system that could be replaced with current paper system in ordinarily old my company. The papaer system has demerit that you cant grasp the current work situation, which one has been done or not.. , we need visible and flexible one.
 
-I have been trying **simple, light, ease-to-use** work manage system.
+I have been trying **simple, light, ease-to-use** work manage system.   
 In this system, you can create a work(project) and make commissions which should be completed **by other department**. you can manage your team member's or your works **visibly and flexibly**.
 
 ### version
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-admin pw:1234
+admin pw:1234    
 other users pw: qwer1234qwer
 
 ### .env
