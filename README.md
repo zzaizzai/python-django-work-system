@@ -4,7 +4,7 @@
 
 [DEMO HERE](https://port-0-python-django-work-system-53px25lbxplfd0.gksl2.cloudtype.app/)
 
-Developing : 22/12/21 ~ 23/12/30
+Developing : 22/12/21 ~ 23/1/3
 
 **Work(your project)**
 **Commission(request for other team or task you have to)**
@@ -27,8 +27,8 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-admin 1234
-other users password: qwer1234qwer
+admin pw:1234
+other users pw: qwer1234qwer
 
 ### .env
 
@@ -52,7 +52,7 @@ MYSQL_PORT=
 1/3 added QRcode of work
 ```
 
-I appreciate Cloud Cype (https://cloudtype.io/) for free and fast hosting service
+I appreciate [Cloud Type](https://cloudtype.io/) for free and fast hosting service
 
 ---
 
