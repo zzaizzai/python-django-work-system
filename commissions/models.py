@@ -29,22 +29,45 @@ class Commission(models.Model):
     def __str__(self):
         return self.title
 
+    def status_color(self) -> str:
+        output_status_color: str = ""
+        today = datetime.date.today()
+        if self.date_due < today and not self.datetime_completed and not self.is_cancled:
+            output_status_color = "text-danger font-weight-bold"
+        elif self.is_cancled:
+            output_status_color = "text-muted font-weight-bold"
+        elif self.datetime_completed:
+            output_status_color = "text-primary font-weight-bold"
+        else:
+            output_status_color = "font-weight-bold"
+        return output_status_color
+
+    def status(self) -> str:
+        output_status: str
+        today = datetime.date.today()
+        if self.date_due < today and not self.datetime_completed and not self.is_cancled:
+            output_status = "over"
+        elif self.date_due > today and not self.datetime_completed and not self.is_cancled:
+            output_status = "waitting"
+        elif self.datetime_completed:
+            output_status = "completed"
+        else:
+            output_status = "cancled"
+        return output_status
+
     @property
     def priority(self) -> int:
-
-        now = datetime.datetime.now().date()
-
-        days_differ_due = self.date_due - now
-        days_differ_created = self.created_at.date() - now
-
-        days_due = days_differ_due.days
-        days_created = days_differ_created.days
-
-        point_sum = -days_due*self.priority_point*2 - days_created*self.priority_point
-
+        point_sum = 0
         # canled or completed one has low priority
         if self.is_cancled or self.datetime_completed:
-            point_sum -= 100
+            point_sum -= 1000
+        else:
+            now = datetime.datetime.now().date()
+            days_differ_due = self.date_due - now
+            days_differ_created = self.created_at.date() - now
+            days_due = days_differ_due.days
+            days_created = days_differ_created.days
+            point_sum += -days_due*self.priority_point*2 - days_created*self.priority_point
 
         return point_sum
 

@@ -9,9 +9,6 @@
 <br>
 <br>
 
-
-
-
 <div class="d-flex mb-3">
     <div class="mr-auto"></div>
     <form class="form-inline mr-2" method="GET" action="{% url 'all_commissions' %}?searched=">
@@ -39,7 +36,6 @@
     </div>
 </div>
 
-
 <table class="table">
     <thead>
         <tr>
@@ -64,37 +60,26 @@
                     class="text-dark">{{commission.created_by.username}} </a></td>
             <td><a href="{% url 'show_team' commission.team.id %}" class="text-dark">{{commission.team.name}} </a></td>
             <td>
-                <div class="d-flex"> {% if commission.status_due == 'over' and not commission.is_cancled%} 
+                <div class="d-flex"> {% if commission.status_due == 'over' and not commission.is_cancled%}
                     <div class="text-danger font-weight-bold">
-                        {{commission.date_due|date:"y-m-j"}}
+                        {{commission.date_due|date:"y-m-d"}}
                     </div>
                     {% else %}
-                    <div>{{commission.date_due|date:"y-m-j"}}</div>
+                    <div>{{commission.date_due|date:"y-m-d"}}</div>
                     {% endif %}
                 </div>
             </td>
-            <td>{{commission.created_at|date:"y-m-j H:i"}} </td>
-
+            <td>{{commission.created_at|date:"y-m-d H:i"}} </td>
             <td>
-                {% if not commission.is_cancled %}
-                {% if commission.datetime_completed %}
-                <span class="text-primary font-weight-bold">Completed</span>
-                {% else %}
-                <span class="text-danger font-weight-bold">Waitting</span>
-                {% endif %}
-                {% else %}
-                <span class="text-muted font-weight-bold">Cancled</span>
-                {% endif %}
+                <div style="text-transform: capitalize;" class="{{commission.status_color}}">{{commission.status}}</div>
             </td>
-
         </tr>
     </tbody>
     {% endfor %}
     {% endif %}
 </table>
 
-
-<nav aria-label="Page navigation example">
+<nav aria-label=" Page navigation example">
     <ul class="pagination">
 
         {% if commissions.has_previous %}
@@ -129,7 +114,6 @@
         <li class="page-item"><a href="?searched={{searched}}&page={{commissions.paginator.num_pages}}&sort={{sort}}"
                 class="page-link">Last &raquo </a>
         </li>
-
 
         {% else %}
 

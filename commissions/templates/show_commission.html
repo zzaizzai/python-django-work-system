@@ -55,7 +55,6 @@
         </div>
     </div>
 </div>
-
 <!-- Parent Work -->
 <div>
     <h5>- Parent Work -</h5>
@@ -78,16 +77,7 @@
     <div class="card-header d-flex">
         <h5 class="mr-auto"><span class="mr-1">No.{{commission.id}}</span> {{commission.title}} </h5>
         <div>
-            {% if not commission.is_cancled %}
-            {% if commission.datetime_completed %}
-            <span class="text-primary font-weight-bold">Completed</span>
-            {% else %}
-            <span class="text-danger font-weight-bold">Waitting</span>
-            {% endif %}
-            {% else %}
-            <span class="text-muted font-weight-bold">Cancled</span>
-            {% endif %}
-
+            <div style="text-transform: capitalize;" class="{{commission.status_color}}">{{commission.status}}</div>
         </div>
 
     </div>

@@ -3,15 +3,12 @@
 {% block content %}
 
 
-
-
 {% if form.erros %}
 <p>something worng with your form</p>
 {% endif %}
 
 <br>
 <br>
-
 
 <div class="d-flex mb-3">
     <div class="mr-auto"></div>
@@ -42,10 +39,11 @@
             <tr>
                 <td>{{work.id}}</td>
                 <td><a href="{%  url 'show_work' work.id %}" class="text-dark font-weight-bold">{{work.title}} </a></td>
-                <td><a href="{%  url 'show_member' work.created_by.id %}" class="text-dark">{{work.created_by}} </a></td>
+                <td><a href="{%  url 'show_member' work.created_by.id %}" class="text-dark">{{work.created_by}} </a>
+                </td>
                 <td><a href="{% url 'show_team' work.team.id %}" class="text-dark">{{work.team.name}} </a></td>
-                <td>{{work.date_due|date:"y-m-j"}} </td>
-                <td>{{work.created_at|date:"y-m-j H:i"}} </td>
+                <td>{{work.date_due|date:"y-m-d"}} </td>
+                <td>{{work.created_at|date:"y-m-d H:i"}} </td>
                 <td>{{work.count_commissions}}
                 </td>
             </tr>
@@ -54,8 +52,6 @@
         {% endif %}
     </table>
 </div>
-
-
 
 
 <nav aria-label="Page navigation example">
@@ -76,10 +72,12 @@
 
         {% for i in nums %}
         {% if works.number == forloop.counter %}
-        <li class="page-item disabled"><a class="page-link " href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
+        <li class="page-item disabled"><a class="page-link "
+                href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
             </a></li>
         {% else %}
-        <li class="page-item"><a class="page-link " href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
+        <li class="page-item"><a class="page-link "
+                href="?searched={{searched}}&page={{forloop.counter}}">{{forloop.counter}}
             </a></li>
         {% endif %}
         {% endfor %}
