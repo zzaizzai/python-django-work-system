@@ -22,8 +22,6 @@ class Commission(models.Model):
         'completed user', blank=True, null=True)
     parent_work = models.ForeignKey(
         Work, blank=True, null=True, on_delete=models.SET_NULL)
-    # description = models.CharField(
-    # 'description', blank=True, null=True, max_length=10000)
     description = RichTextField(blank=True, null=True)
     is_cancled = models.BooleanField(default=False)
     priority_point = models.IntegerField(default=1, blank=False, null=False)

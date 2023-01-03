@@ -62,7 +62,7 @@ def all_commissions(request):
 def show_commission(request, commission_id):
     commission = Commission.objects.get(pk=commission_id)
 
-    if not request.user.is_anonymous:
+    if request.user.is_authenticated:
         CommissionHistory.objects.create(
             kind="view", parent_commission=commission, created_by=request.user)
 

@@ -41,9 +41,9 @@
             <div class="modal-body">
                 {% for history in histories %}
                 <div class="d-flex">
-                    <div class="mr-auto">
-                        {{history.created_by.username}}
-                        {{history.kind}}
+                    <div class="mr-auto d-flex">
+                        <div class="mr-2"> {{history.created_by.username}}</div>
+                        <div style="text-transform: uppercase;">{{history.kind}}</div>
                     </div>
                     <div>{{history.created_at|date:"y-n-j H:i"}}</div>
                 </div>
@@ -56,6 +56,10 @@
     </div>
 </div>
 
+<!-- Parent Work -->
+<div>
+    <h5>- Parent Work -</h5>
+</div>
 <div class="card mb-5">
     <div class="card-header d-flex">
         <h5>
@@ -173,10 +177,20 @@
 </div>
 
 
+{% if user.is_authenticated %}
 <form action="" method="POST">
     {% csrf_token %}
     {{form_comment.as_p}}
     <input type="submit" value="Add Comment" class="btn btn-primary">
 </form>
+
+{% else %}
+<input type="submit" value="Add Comment" class="btn btn-primary disabled" disabled>
+{% endif %}
+
+<br>
+<br>
+<br>
+<br>
 
 {% endblock %}

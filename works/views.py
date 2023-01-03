@@ -50,7 +50,7 @@ def show_work(request, work_id):
 
     work = Work.objects.get(pk=work_id)
 
-    if not request.user.is_anonymous:
+    if request.user.is_authenticated:
         WrokHistory.objects.create(
             kind="view", parent_work=work, created_by=request.user)
 
@@ -60,7 +60,7 @@ def show_work(request, work_id):
 
         parent_work = Work.objects.get(pk=work_id)
 
-        if form_comment.is_valid() and not request.user.is_anonymousr and parent_work:
+        if form_comment.is_valid() and request.user.is_authenticated and parent_work:
             comment = form_comment.save(commit=False)
             comment.parent_work = parent_work
             comment.created_by = request.user
