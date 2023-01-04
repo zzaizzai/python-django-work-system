@@ -16,7 +16,7 @@
 <div class="card">
     <div class="card-header d-flex">
         <h5 class="mr-auto">{{member.id}}. {{member.username}}</h5>
-        <div>Role</div>
+        <!-- <div>Role</div> -->
     </div>
     <div class="card-body">
         <div class="card-title">
@@ -51,24 +51,32 @@
 <br>
 
 <div>
-    <h4>History</h4>
+    <h4>Histories</h4>
     <h5>Commissions (limit 10)</h5>
+
+
     {% for history in histories_commission %}
-    {{history.kind}}
-    of <a href="{% url 'show_commission' history.parent_commission.id %}">Commission No.
-        {{history.parent_commission.id}}</a>
-    {{history.created_at|date:"y-n-j H:i"}}
-    <br>
+    <div class="d-flex">
+        <a class="text-dark" href="{% url 'show_commission' history.parent_commission.id %}">
+            <span class="mr-2">{{history.created_at|date:"y-m-d H:i"}}</span>
+            <span style="text-transform: capitalize;">{{history.kind}}</span> No.{{history.parent_commission.id}}
+            Commission
+        </a>
+    </div>
     {% endfor %}
-    
+
     <br>
-    
+
+
     <h5>Works (limit 10)</h5>
     {% for history in histories_work %}
-    {{history.kind}}
-    of <a href="{% url 'show_work' history.parent_work.id %}">Work No. {{history.parent_work.id}}</a>
-    {{history.created_at|date:"y-n-j H:i"}}
-    <br>
+    <div class="d-flex">
+        <a class="text-dark" href="{% url 'show_work' history.parent_work.id %}"> <span
+                class="mr-2">{{history.created_at|date:"y-m-d H:i"}}</span>
+            <span style="text-transform: capitalize;">{{history.kind}}</span> No.{{history.parent_work.id}}
+            Work
+        </a>
+    </div>
     {% endfor %}
 
 

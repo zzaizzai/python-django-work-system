@@ -28,9 +28,9 @@
                 <th scope="col" style="width:45%">Title</th>
                 <th scope="col">By</th>
                 <th scope="col">Team</th>
-                <th scope="col">Due</th>
+                <!-- <th scope="col">Due</th> -->
                 <th scope="col">Created</th>
-                <th scope="col">Commissions</th>
+                <!-- <th scope="col">Commissions</th> -->
             </tr>
         </thead>
         {% if works %}
@@ -42,9 +42,9 @@
                 <td><a href="{%  url 'show_member' work.created_by.id %}" class="text-dark">{{work.created_by}} </a>
                 </td>
                 <td><a href="{% url 'show_team' work.team.id %}" class="text-dark">{{work.team.name}} </a></td>
-                <td>{{work.date_due|date:"y-m-d"}} </td>
+                <!-- <td>{{work.date_due|date:"y-m-d"}} </td> -->
                 <td>{{work.created_at|date:"y-m-d H:i"}} </td>
-                <td>{{work.count_commissions}}
+                <!-- <td>{{work.count_commissions}} -->
                 </td>
             </tr>
         </tbody>

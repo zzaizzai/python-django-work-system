@@ -41,7 +41,7 @@
                 </button>
             </div>
             <div class="modal-body d-flex">
-                <div class="mx-auto">
+                <div class="mx-auto d-flex">
                     {{ svg|safe }}
                 </div>
             </div>
@@ -90,15 +90,15 @@
     <div class="card-body">
         <h5>Due: {{work.date_due|date:"Y-m-j" }}</h5>
         <div>
-            Created by: <a href="{% url 'show_member' work.created_by.id %}">{{work.created_by}}</a>
+            Created by: <a class="text-dark" href="{% url 'show_member' work.created_by.id %}">{{work.created_by}}</a>
         </div>
         <div>
-            Team: <a href="{% url 'show_team' work.team.id  %}">{{work.team}}</a>
+            Team: <a class="text-dark" href="{% url 'show_team' work.team.id  %}">{{work.team}}</a>
         </div>
         <hr>
 
         <div class="card-text">
-            <h6>Description </h6>{{work.description|safe}}
+            <h6 class="font-weight-bold">Description: </h6>{{work.description|safe}}
         </div>
 
     </div>
@@ -132,7 +132,7 @@
 <div class="card">
     <div class="card-header d-flex">
         {% if counts.commissions > 0 %}
-        <h5>{{counts.commissions}} commissions</h5>
+        <h5>{{counts.commissions}} Commissions</h5>
         {% else %}
         <h5 style="color: gray;">{{counts.commissions}} Commissions</h5>
         {% endif %}
@@ -212,8 +212,6 @@
 
     <br>
     <br>
-
-    <h6>URL if you want</h6>
 
     <br>
     <br>
