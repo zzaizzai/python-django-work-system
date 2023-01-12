@@ -140,10 +140,9 @@
 </div>
 
 
+<!-- Commissions List -->
 {% for commission in child_commissions %}
 {% if commission.datetime_completed or commission.is_cancled %}
-
-
 <div class="card" style="background-color: gainsboro;">
     {% else %}
     <div class="card">
@@ -155,25 +154,11 @@
                     <span class="mr-1">No.{{commission.id}}</span>
                     {{commission.title}}</a>
             </h5>
-            <div class="font-weight-bold">
-                {% if not commission.is_cancled %}
-                {% if commission.datetime_completed %}
-                <span class="text-primary font-weight-bold">Completed</span>
-                {% else %}
-                <span class="text-danger font-weight-bold">Waitting</span>
-                {% endif %}
-                {% else %}
-                <span class="text-muted font-weight-bold">Cancled</span>
-                {% endif %}
-            </div>
+            <div style="text-transform: capitalize;" class="{{commission.status_color}}">{{commission.status}}</div>
         </div>
     </div>
     {% empty %}
-    <!-- <div class="card">
-        <div class="card-header d-flex">
-            <h5>No commission</h5>
-        </div>
-    </div> -->
+
     {% endfor %}
 
     {% endif %}
