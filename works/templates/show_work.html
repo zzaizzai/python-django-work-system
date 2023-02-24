@@ -81,7 +81,7 @@
 </div>
 
 
-<div class="card mb-5">
+<div class="card mb-5" style="border-color: black;">
     <div class="card-header d-flex">
         <h5 class="mr-auto"><span class="mr-1">No.{{work.id}}
             </span> {{work.title}} </h5>
@@ -129,12 +129,12 @@
 </div>
 
 
-<div class="card">
+<div class="card" style="border-color: black;">
     <div class="card-header d-flex">
         {% if counts.commissions > 0 %}
         <h5>{{counts.commissions}} Commissions</h5>
         {% else %}
-        <h5 style="color: gray;">{{counts.commissions}} Commissions</h5>
+        <h5 style="color: gray; ">{{counts.commissions}} Commissions</h5>
         {% endif %}
     </div>
 </div>
@@ -143,9 +143,9 @@
 <!-- Commissions List -->
 {% for commission in child_commissions %}
 {% if commission.datetime_completed or commission.is_cancled %}
-<div class="card" style="background-color: gainsboro;">
+<div class="card" style="background-color: gainsboro; border-color: black;">
     {% else %}
-    <div class="card">
+    <div class="card" style="border-color: black;">
         {% endif %}
 
         <div class="card-header d-flex">
@@ -181,6 +181,8 @@
         {% endif %}
     </div>
 
+
+    <!-- Comments List -->
     <form action="" method="POST">
         {% csrf_token %}
 
